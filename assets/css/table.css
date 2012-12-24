@@ -1,21 +1,21 @@
 .paginate_button, .paginate_active {
-	background-color: lightgray;
-	border: 1px solid gray;
+	background-color: #4F9DEF;
 	text-decoration: none;
 	padding: 4px 7px;
-	color: black;
+	color: #ffffff;
 	margin: 0px 1px;
 	border-radius: 3px;
 	cursor: pointer
 }
 
-.paginate_active, .paginate_button:hover {
-	font-weight: normal;
-	background-color: #f1f1f1;
+.paginate_button_disabled {
+	opacity: 0.3;
 }
 
-.paginate_button_disabled {
-	opacity: 0.4;
+.paginate_active, .paginate_button:hover {
+	font-weight: normal;
+	background-color: #B2DFF4;
+	color: #000000;
 }
 
 table td{
@@ -23,20 +23,17 @@ table td{
 	padding: 7px;
 }
 
-table th {
-	border-right: 1px solid gray;
-	border-bottom: 2px solid gray;
-	padding: 5px;
-	font-weight: normal;
-}
-
 td:last-child, th:last-child {
 	border-right: none;
 }
 
 th {
-	background: lightgray;
-	color: #000;
+	border-right: 1px solid gray;
+	border-bottom: 2px solid #4F9DEF;
+	padding: 5px;
+	font-weight: normal;
+	background-color: lightgray;
+	color: #000000;
 }
 
 tr:nth-child(even) {
@@ -44,8 +41,7 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-	background-color: #4F9DEF;
-	color: white;
+	background-color: #B2DFF4;
 	cursor: pointer;
 }
 
@@ -64,7 +60,7 @@ table {
 }
 
 .services-table-container {
-	width: 50%;
+	width: 70%;
 	margin: 0 auto;
 	font-size: 12px;
 }
