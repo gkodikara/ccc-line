@@ -19,7 +19,7 @@ class Services extends CI_Controller {
 
 		$service_data = $this->services_model->get_services_list($config['per_page'], $this->uri->segment(3));
 
-		$config['base_url'] = 'http://gkodikara.dev/codeigniter/ccc/index.php/services/get_services';
+		$config['base_url'] = base_url('index.php/services/get_services');
 		$config['total_rows'] = $service_data["total_count"];
 		
 
