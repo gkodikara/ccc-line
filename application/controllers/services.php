@@ -21,6 +21,9 @@ class Services extends CI_Controller {
 
 		$config['base_url'] = base_url('index.php/services/get_services');
 		$config['total_rows'] = $service_data["total_count"];
+		$config['full_tag_open'] = "<div class='pagination'>";
+		$config['full_tag_close'] = "</div>";
+
 		
 
 		$this->pagination->initialize($config); 
