@@ -5,10 +5,10 @@
         parent::__construct();
     }
 
-    function get_services_list($limit, $offset) {
-    	$query = $this->db->query('SELECT * FROM services
-                                    LIMIT ?
-                                    OFFSET ?', array($limit, (int) $offset));
+    function get_services_list() {
+    	$query = $this->db->query('SELECT * FROM services');
+                                    // LIMIT ?
+                                    // OFFSET ?', array($limit, (int) $offset));
     	$results = array();
         $total_results_count = $this->db->get("services")->num_rows();
     	foreach ($query->result() as $service) {

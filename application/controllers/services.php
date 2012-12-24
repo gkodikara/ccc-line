@@ -5,28 +5,28 @@ class Services extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model("services_model");
-		$this->load->library('pagination');
+		// $this->load->library('pagination');
 		$this->load->library("table");
 
 	}
 
 	function index() {
+		$this->load->view("header");
 		$this->get_services();
+		$this->load->view("footer");
 	}
 
 	function get_services() {
-		$config['per_page'] = 20; 
+		// $config['per_page'] = 20; 
 
-		$service_data = $this->services_model->get_services_list($config['per_page'], $this->uri->segment(3));
+		// $service_data = $this->services_model->get_services_list($config['per_page'], $this->uri->segment(3));
+		$service_data = $this->services_model->get_services_list();
 
-		$config['base_url'] = base_url('index.php/services/get_services');
-		$config['total_rows'] = $service_data["total_count"];
-		$config['full_tag_open'] = "<div class='pagination'>";
-		$config['full_tag_close'] = "</div>";
-
-		
-
-		$this->pagination->initialize($config); 
+		// $config['base_url'] = base_url('index.php/services/get_services');
+		// $config['total_rows'] = $service_data["total_count"];
+		// $config['full_tag_open'] = "<div class='pagination'>";
+		// $config['full_tag_close'] = "</div>";
+		// $this->pagination->initialize($config); 
 
 		$this->table->set_heading("Service ID", 
 									"Service Name", 
@@ -35,9 +35,7 @@ class Services extends CI_Controller {
 									"Service Contact", 
 									"Service Contact Telephone"
 									);
-
-		$this->table->set_caption('Available Services');
-
+		
 		$data = array(
 			"services_table" => $this->table->generate($service_data["results"])
 		);

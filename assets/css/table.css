@@ -1,0 +1,85 @@
+.paginate_button, .paginate_active {
+	background-color: lightgray;
+	border: 1px solid gray;
+	text-decoration: none;
+	padding: 4px 7px;
+	color: black;
+	margin: 0px 1px;
+	border-radius: 3px;
+	cursor: pointer
+}
+
+.paginate_active, .paginate_button:hover {
+	font-weight: normal;
+	background-color: #f1f1f1;
+}
+
+.paginate_button_disabled {
+	opacity: 0.4;
+}
+
+table td{
+	border-right: 1px solid lightgray;
+	padding: 7px;
+}
+
+table th {
+	border-right: 1px solid gray;
+	border-bottom: 2px solid gray;
+	padding: 5px;
+	font-weight: normal;
+}
+
+td:last-child, th:last-child {
+	border-right: none;
+}
+
+th {
+	background: lightgray;
+	color: #000;
+}
+
+tr:nth-child(even) {
+  background-color: #e3e3e3;
+}
+
+tr:hover {
+	background-color: #4F9DEF;
+	color: white;
+	cursor: pointer;
+}
+
+tr:first-child:hover {
+	cursor: arrow;
+}
+
+table {
+	margin: 15px 0px;
+	font-size: 13px;
+	border: 1px solid #e3e3e3;
+	box-shadow: 2px 2px 3px #999;
+	max-height: 200px;
+	overflow: auto;
+	width: 100%;
+}
+
+.services-table-container {
+	width: 50%;
+	margin: 0 auto;
+	font-size: 12px;
+}
+
+.dataTables_paginate, .dataTables_length {
+	float: right;
+}
+
+.dataTables_info, .dataTables_filter {
+	float: left;
+}
+
+.dataTables_filter, .dataTables_length {
+	margin-bottom: 3px;
+}
+.dataTables_filter input {
+	border: 1px solid #4F9DEF;
+}
