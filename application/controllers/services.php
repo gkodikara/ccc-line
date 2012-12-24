@@ -25,8 +25,6 @@ class Services extends CI_Controller {
 
 		$this->pagination->initialize($config); 
 
-		echo $this->pagination->create_links();
-
 		$this->table->set_heading("Service ID", 
 									"Service Name", 
 									"Service Type", 
@@ -41,7 +39,11 @@ class Services extends CI_Controller {
 			"services_table" => $this->table->generate($service_data["results"])
 		);
 
-		$this->load->view("services", $data);
+		if ($this->input->post("ajax")) {
+			echo json_encode($this->load->view("services_table", $data, true));
+		} else {
+			$this->load->view("services", $data);
+		}
 	}
 
 }
