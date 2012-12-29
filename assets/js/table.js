@@ -24,8 +24,27 @@ function fnInit() {
 	$(".services-table-container table").undelegate("tr", "click");
 	$(".services-table-container table").delegate("tr", "click", function(){
 		var sSelectedRowId = $(this).children("td:first-child").html();
-		fnPopulateModalInput($(this));
+		fnPopulateModalInput($(this), sSelectedRowId);
 		fnAddUpdateService("update", sSelectedRowId);
+	});
+
+	$(".services-table-container .service-modal").undelegate(".delete-button", "click");
+	$(".service-modal").delegate(".delete-button", "click", function(){
+		fnDeleteService();
+	});
+}
+
+function fnDeleteService() {
+	$.ajax({
+		type: "POST",
+		url: "remove_service/",
+		data: { "service_id": $("#service_id").val() },
+		dataType: "json",
+		success: function(response) {
+			$(".services-table-container .table-wrapper").html(response.services_table);	
+			$(".service-modal").modal("hide");			
+		}
+
 	});
 }
 
@@ -132,7 +151,8 @@ function fnGetFormData() {
 	return oData;
 }
 
-function fnPopulateModalInput(oTableRow) {
+function fnPopulateModalInput(oTableRow, sServiceId) {
+	$("#service_id").val($(oTableRow).children("td").eq(0).html());
 	$("#service_name").val($(oTableRow).children("td").eq(1).html());
 	$("#service_type").val($(oTableRow).children("td").eq(2).html());
 	$("#service_location").val($(oTableRow).children("td").eq(3).html());

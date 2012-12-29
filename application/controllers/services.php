@@ -97,6 +97,14 @@ class Services extends CI_Controller {
 		return $this->get_services(true);
 	}
 
+	function remove_service() {
+		$delete_service_id = $this->input->post("service_id");
+
+		$this->services_model->remove_service($delete_service_id);
+
+		return $this->get_services(true);
+	}
+
 }
 
 ?>

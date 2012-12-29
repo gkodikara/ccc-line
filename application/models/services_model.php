@@ -57,7 +57,9 @@
             "service_contact_telephone" => $service_contact_telephone
             );
          
-        $this->db->insert('services', $data); 
+        $query = $this->db->insert('services', $data); 
+
+        return $query;
     }
 
     function update_service($service_id, $service_name, $service_type, $service_location, $service_contact, $service_contact_telephone) {
@@ -70,7 +72,15 @@
         );
 
         $this->db->where('id', $service_id);
-        $this->db->update('services', $data);
+        $query = $this->db->update('services', $data);
+
+        return $query;
+    }
+
+    function remove_service($service_id) {
+        $query = $this->db->delete('services', array('id' => $service_id));
+
+        return $query;
     }
 }
 

@@ -12,6 +12,7 @@
     <div class="modal-body">
     	<div class="add-service-toggle">
 			<form class="form-horizontal">
+				<input type="hidden" id="service_id" val=""/>
 				<div class="control-group">
 					<label class="control-label" for="service_name">Service Name</label>
 				<div class="controls">
