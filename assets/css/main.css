@@ -1,3 +1,8 @@
 body {
 	font-family: tahoma;
 }
+
+.modal-header {
+	background-color: #4F9DEF;
+	color: #ffffff;
+}

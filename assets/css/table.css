@@ -1,6 +1,6 @@
 .paginate_button, .paginate_active {
 	background-color: #4F9DEF;
-	text-decoration: none;
+	text-decoration: none !important;
 	padding: 4px 7px;
 	color: #ffffff;
 	margin: 0px 1px;
@@ -18,9 +18,9 @@
 	color: #000000;
 }
 
-table td{
+table td {
 	border-right: 1px solid lightgray;
-	padding: 7px;
+	padding: 3px;
 }
 
 td:last-child, th:last-child {
@@ -30,8 +30,8 @@ td:last-child, th:last-child {
 th {
 	border-right: 1px solid gray;
 	border-bottom: 2px solid #4F9DEF;
-	padding: 5px;
-	font-weight: normal;
+	padding: 4px;
+	font-weight: bold;
 	background-color: lightgray;
 	color: #000000;
 }
@@ -46,23 +46,26 @@ tr:hover {
 }
 
 tr:first-child:hover {
-	cursor: arrow;
 }
 
 table {
 	margin: 15px 0px;
-	font-size: 13px;
+	/*font-size: 13px;*/
 	border: 1px solid #e3e3e3;
 	box-shadow: 2px 2px 3px #999;
 	max-height: 200px;
 	overflow: auto;
 	width: 100%;
+	clear: both;
 }
 
 .services-table-container {
-	width: 70%;
+	width: 80%;
 	margin: 0 auto;
-	font-size: 12px;
+}
+
+.services-table-container, label {
+	/*font-size: 12px !important;*/
 }
 
 .dataTables_paginate, .dataTables_length {
@@ -76,6 +79,19 @@ table {
 .dataTables_filter, .dataTables_length {
 	margin-bottom: 3px;
 }
+
+.dataTables_length select {
+	width: 50px;
+}
+
 .dataTables_filter input {
-	border: 1px solid #4F9DEF;
+	border: 1px solid #4F9DEF !important;
+}
+
+h1, h2, h3, h4, h5 {
+	text-align: center;
+}
+
+.add-service-button {
+	margin: 0px 2px;
 }
