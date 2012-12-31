@@ -6,3 +6,14 @@ body {
 	background-color: #4F9DEF;
 	color: #ffffff;
 }
+
+.loader {
+	background-image: url("../img/loader-grey.gif");
+	background-repeat: no-repeat;
+	height: 88px;
+	width: 128px;
+	display: none;
+	position: absolute;
+	top: 36%;
+	left: 45%;
+}

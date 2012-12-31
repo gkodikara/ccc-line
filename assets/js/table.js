@@ -34,18 +34,28 @@ function fnInit() {
 	});
 }
 
-function fnDeleteService() {
-	$.ajax({
-		type: "POST",
-		url: "remove_service/",
-		data: { "service_id": $("#service_id").val() },
-		dataType: "json",
-		success: function(response) {
-			$(".services-table-container .table-wrapper").html(response.services_table);	
-			$(".service-modal").modal("hide");			
-		}
+function fnToggleLoading() {
+	$(".add-service-toggle").toggle();
+}
 
-	});
+function fnDeleteService() {
+	var bConfirm = confirm("Are you sure you want to delete this service?");
+	if (bConfirm) {
+		fnToggleLoading();
+		$.ajax({
+			type: "POST",
+			url: "remove_service/",
+			data: { "service_id": $("#service_id").val() },
+			dataType: "json",
+			success: function(response) {
+				fnToggleLoading();
+				$(".services-table-container .table-wrapper").html(response.services_table);
+				fnInitDatatable();
+				fnInit();	
+				$(".service-modal").modal("hide");			
+			}
+		});
+	}
 }
 
 //For Codeigniter Pagination
@@ -70,7 +80,7 @@ $(".pagination a").unbind();
 }
 
 function fnAddUpdateService(sType, sServiceId) {
-	$(".service-modal .modal-body input").css("border-color", "#ccc");
+	$(".service-modal .modal-body input[type=text]").css("border-color", "#ccc");
 
 	switch(sType) {
 		case "add":
@@ -94,10 +104,9 @@ function fnAddUpdateService(sType, sServiceId) {
 	$(".service-modal").modal();
 
 	$(".service-modal").undelegate(".service-save", "click");
-	
-	$(".service-modal").delegate(".service-save", "click", function(){
+	$(".service-modal").delegate(".service-save", "click", function(){		
 		if (fnValidation(".service-modal .modal-body form")) {
-			
+			fnToggleLoading();
 			var oData = fnGetFormData();
 			
 			switch(sType) {
@@ -108,6 +117,7 @@ function fnAddUpdateService(sType, sServiceId) {
 						type: "POST",
 						dataType: "json",
 						success: function(response) {
+							fnToggleLoading();
 							$(".services-table-container .table-wrapper").html(response.services_table);
 							fnInitDatatable();
 							fnInit();
@@ -124,7 +134,8 @@ function fnAddUpdateService(sType, sServiceId) {
 						data: oData,
 						type: "POST",
 						dataType: "json",
-						success: function(response) {	
+						success: function(response) {
+							fnToggleLoading();	
 							$(".services-table-container .table-wrapper").html(response.services_table);
 							fnInitDatatable();
 							fnInit();
@@ -164,7 +175,7 @@ function fnPopulateModalInput(oTableRow, sServiceId) {
 
 function fnValidation(sContainerDivClass) {
 		var iValidCount = 0;
-		$.each($(sContainerDivClass + " input"), function(iIndex, oObj){
+		$.each($(sContainerDivClass + " input[type=text]"), function(iIndex, oObj){
 			if ($.trim($(this).val()) == "") {
 				$(this).css("border-color", "red");
 			} else {
@@ -172,7 +183,7 @@ function fnValidation(sContainerDivClass) {
 				iValidCount++;
 			}
 		});
-		if ($(sContainerDivClass + " input").length == iValidCount) {
+		if ($(sContainerDivClass + " input[type=text]").length == iValidCount) {
 			return true;
 		} else {
 			return false;

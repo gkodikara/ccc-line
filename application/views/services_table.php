@@ -10,7 +10,7 @@
 		<h4 class="service-modal-header">Add Service</h4>
   	</div>
     <div class="modal-body">
-    	<div class="add-service-toggle">
+    	<div class="service-form-container">
 			<form class="form-horizontal">
 				<input type="hidden" id="service_id" val=""/>
 				<div class="control-group">
@@ -52,4 +52,6 @@
 	    <a href="#" class="btn" data-dismiss="modal"><i class="icon-remove"></i> Close</a>
   		<a href="#" class="btn service-save"><i class="icon-file"></i> Save</a>
 	</div>
+	<div class="loader add-service-toggle"></div>
 </div>
+
