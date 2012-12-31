@@ -1,3 +1,4 @@
+var sBaseUrl = "/index.php/services/";
 fnApplyPagination();
 fnInitDatatable();
 fnInit();
@@ -44,7 +45,7 @@ function fnDeleteService() {
 		fnToggleLoading();
 		$.ajax({
 			type: "POST",
-			url: "remove_service/",
+			url: sBaseUrl + "remove_service/",
 			data: { "service_id": $("#service_id").val() },
 			dataType: "json",
 			success: function(response) {
@@ -112,7 +113,7 @@ function fnAddUpdateService(sType, sServiceId) {
 			switch(sType) {
 				case "add":
 					$.ajax({
-						url: "add_service/",
+						url: sBaseUrl + "add_service/",
 						data: oData,
 						type: "POST",
 						dataType: "json",
@@ -130,7 +131,7 @@ function fnAddUpdateService(sType, sServiceId) {
 					oData.service_id = sServiceId;
 					oData.ajax = 1;
 					$.ajax({
-						url: "update_service/",
+						url: sBaseUrl + "update_service/",
 						data: oData,
 						type: "POST",
 						dataType: "json",
