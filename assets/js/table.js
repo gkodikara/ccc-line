@@ -112,7 +112,7 @@ function fnAddUpdateService(sType, sServiceId) {
 			switch(sType) {
 				case "add":
 					$.ajax({
-						url: "add_service",
+						url: "add_service/",
 						data: oData,
 						type: "POST",
 						dataType: "json",
@@ -130,7 +130,7 @@ function fnAddUpdateService(sType, sServiceId) {
 					oData.service_id = sServiceId;
 					oData.ajax = 1;
 					$.ajax({
-						url: "update_service",
+						url: "update_service/",
 						data: oData,
 						type: "POST",
 						dataType: "json",
