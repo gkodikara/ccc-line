@@ -88,7 +88,7 @@ function fnDeleteService() {
 		fnToggleLoading();
 		$.ajax({
 			type: "POST",
-			url: "remove_service/",
+			url: "services/remove_service",
 			data: { "service_id": $("#service_id").val() },
 			dataType: "json",
 			success: function(response) {
@@ -151,11 +151,10 @@ function fnAddUpdateService(sType, sServiceId) {
 		if (fnValidation(".service-modal .modal-body form")) {
 			fnToggleLoading();
 			var oData = fnGetFormData();
-			console.debug(oData);
 			switch(sType) {
 				case "add":
 					$.ajax({
-						url: "add_service/",
+						url: "services/add_service",
 						data: oData,
 						type: "POST",
 						dataType: "json",
@@ -173,7 +172,7 @@ function fnAddUpdateService(sType, sServiceId) {
 					oData.service_id = sServiceId;
 					oData.ajax = 1;
 					$.ajax({
-						url: "update_service/",
+						url: "services/update_service",
 						data: oData,
 						type: "POST",
 						dataType: "json",
@@ -206,7 +205,6 @@ function fnGetFormData() {
 }
 
 function fnGetTableHeads() {
-	console.debug("reaaaa")
 	var sModalInputLayout = 	'<div class="service-form-container">' +
 									'<form class="form-horizontal">';
 
@@ -252,7 +250,6 @@ function fnValidation(sContainerDivClass) {
 				iValidCount++;
 			}
 		});
-		console.debug(iValidCount)
 		if (($(sContainerDivClass + " input[type=text]").length - 1) == iValidCount) {
 			return true;
 		} else {
