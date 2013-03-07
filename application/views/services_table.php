@@ -1,5 +1,6 @@
 <div class="services-table-container">
 	<h3>Services</h3>
+	<br/>
 	<div class="table-wrapper">
 		<?= $services_table; ?>
 	</div>
@@ -11,39 +12,8 @@
   	</div>
     <div class="modal-body">
     	<div class="service-form-container">
-			<form class="form-horizontal">
-				<input type="hidden" id="service_id" val=""/>
-				<div class="control-group">
-					<label class="control-label" for="service_name">Service Name</label>
-				<div class="controls">
-					<input type="text" id="service_name" placeholder="Type Service Name...">
-				</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="service_type">Service Type</label>
-					<div class="controls">
-						<input type="text" id="service_type" placeholder="Type Service Type...">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="service_location">Service Location</label>
-					<div class="controls">
-						<input type="text" id="service_location" placeholder="Type Service Location...">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="service_contact">Contact Name</label>
-					<div class="controls">
-						<input type="text" id="service_contact" placeholder="Type Contact Name...">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="service_contact_telephone">Contact Telephone</label>
-					<div class="controls">
-						<input type="text" id="service_contact_telephone" placeholder="Type Telephone Number...">
-					</div>
-				</div>
-			</form>
+		</div>
+		<div class="service-type-form-container">	
 		</div>
 
   	</div>
@@ -54,4 +24,6 @@
 	</div>
 	<div class="loader add-service-toggle"></div>
 </div>
+<div id="field_list" style="display:none;"><?= $field_names_data["field_name_html"]; ?></div>
+
 

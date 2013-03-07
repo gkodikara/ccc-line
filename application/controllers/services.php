@@ -4,30 +4,29 @@ class Services extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
+		$this->load->model("login");
 		$this->load->model("services_model");
 		$this->load->library("table");
-
 	}
 
 	function index() {
 		$this->load->view("header");
+		$this->login->check_login();
 		$this->get_services();
 		$this->load->view("footer");
 	}
 
 	function get_services($return_json = false) {
 		$service_data = $this->services_model->get_services_list();
-
-		$this->table->set_heading("Service ID", 
-									"Service Name", 
-									"Service Type", 
-									"Service Location", 
-									"Service Contact", 
-									"Service Contact Telephone"
-									);
 		
+		$field_names = $this->field_name_process($service_data["field_names"]);
+
+		$this->table->set_heading($field_names["field_names_readable"]);
+
+
 		$data = array(
-			"services_table" => $this->table->generate($service_data["results"])
+			"services_table" => $this->table->generate($service_data["results"]),
+			"field_names_data" => $field_names
 		);
 
 		if ($return_json) {
@@ -37,6 +36,25 @@ class Services extends CI_Controller {
 		}
 	}
 
+	function field_name_process($field_names) {
+		$field_name_html = "";
+		$field_names_readable = array();
+		$count = 0;
+
+		foreach($field_names as $field) {
+			$field_name_readable = ucfirst(str_replace("_", " ", $field));
+			array_push($field_names_readable, $field_name_readable);
+			$field_name_html .= "<label><input class='field-name-select' type='checkbox' col-index='".$count."' value='".$field_name_readable."'/> ".$field_name_readable."</label>";
+			$count++;
+		}
+
+		$return_array = array("field_name_html" => $field_name_html, 
+								"field_names_readable" => $field_names_readable);
+
+		return $return_array;
+	}
+
+	//PHP Paginate - not used
 	function get_services_paginate() {
 		$this->load->library('pagination');
 
@@ -104,6 +122,36 @@ class Services extends CI_Controller {
 
 		return $this->get_services(true);
 	}
+
+	function get_service_types() {
+		return $this->services_model->get_service_types();
+
+	}
+
+	function add_service_type() {
+		$service_type_name = $this->input->post("service_type_name");
+		$service_type_description = $this->input->post("service_type_description");
+
+		$this->services_model->add_service_type($service_type_name, 
+			$service_type_description);
+	}
+
+	function remove_service_type() {
+		$service_type_id = $this->input->post("service_type_id");
+
+		$this->services_model->remove_service_type($service_type_id);
+	}
+
+	function update_service_type() {
+		$service_type_id = $this->input->post("service_type_id");
+		$service_type_name = $this->input->post("service_type_name");
+		$service_type_description = $this->input->post("service_type_description");
+
+		$this->services_model->update_service_type($service_type_id, 
+			$service_type_name, 
+			$service_type_description);
+	}
+
 
 }
 

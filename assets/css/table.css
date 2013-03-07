@@ -95,3 +95,7 @@ h1, h2, h3, h4, h5 {
 .add-service-button {
 	margin: 0px 2px;
 }
+
+input[type="checkbox"] {
+	margin-top: 0px !important;
+}

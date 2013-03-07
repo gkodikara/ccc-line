@@ -1,4 +1,3 @@
-var sBaseUrl = "/index.php/services/";
 fnApplyPagination();
 fnInitDatatable();
 fnInit();
@@ -12,8 +11,11 @@ function fnInitDatatable(bDestroyExisting) {
 	oDataTable = $(".services-table-container .table-wrapper table").dataTable({
 		"sPaginationType": "full_numbers"
 	});
+
+	var sAdditionalButtons = '<button class="btn add-service-button"><i class="icon-plus"></i> Add Service</button>' + 
+	'<button rel="popover" class="btn option-popover" data-placement="bottom" data-html="true" data-original-title="Choose Fields"><i class="icon-th-list"></i> Choose Fields</button>';
 	
-	$(".dataTables_filter").after("<button class='btn add-service-button'><i class='icon-plus'></i> Add Service</button>");
+	$(".dataTables_filter").after(sAdditionalButtons);
 }
 
 function fnInit() {
@@ -22,9 +24,13 @@ function fnInit() {
 		fnAddUpdateService("add");
 	});
 
-	$(".services-table-container table").undelegate("tr", "click");
-	$(".services-table-container table").delegate("tr", "click", function(){
+	$(".services-table-container table tbody").undelegate("tr", "click");
+	$(".services-table-container table tbody").delegate("tr", "click", function(){
+
 		var sSelectedRowId = $(this).children("td:first-child").html();
+
+		$(".service-modal .modal-body .service-form-container").html(fnGetTableHeads());
+
 		fnPopulateModalInput($(this), sSelectedRowId);
 		fnAddUpdateService("update", sSelectedRowId);
 	});
@@ -32,6 +38,43 @@ function fnInit() {
 	$(".services-table-container .service-modal").undelegate(".delete-button", "click");
 	$(".service-modal").delegate(".delete-button", "click", function(){
 		fnDeleteService();
+	});
+
+	$(".services-table-container").undelegate(".field-name-select", "click");
+	$(".services-table-container").delegate(".field-name-select", "click", function(){
+
+		//Update hidden div with our change
+		$("#field_list").html($(".popover-content").html());
+		
+		var iColIndex = $(this).attr("col-index");
+		if ($(this).attr("checked")) {
+			oDataTable.fnSetColumnVis(iColIndex, true);
+		} else {
+			oDataTable.fnSetColumnVis(iColIndex, false);
+		}
+	});
+
+	fnCheckFieldVisibility();
+
+	//enable popovers
+	$(".option-popover").popover({
+		content: $("#field_list").html()
+	});
+
+	$(".option-popover").click(function(){
+		fnCheckFieldVisibility();
+	});
+}
+
+function fnCheckFieldVisibility() {
+	$.each($(".field-name-select"), function(iIndex, oObj){
+		var iCol = $(oObj).attr("col-index");
+		var bVis = oDataTable.fnSettings().aoColumns[iCol].bVisible;
+		if (bVis) {
+			$(oObj).attr("checked", true);
+		} else {
+			$(oObj).attr("checked", false);
+		}
 	});
 }
 
@@ -45,7 +88,7 @@ function fnDeleteService() {
 		fnToggleLoading();
 		$.ajax({
 			type: "POST",
-			url: sBaseUrl + "remove_service/",
+			url: "remove_service/",
 			data: { "service_id": $("#service_id").val() },
 			dataType: "json",
 			success: function(response) {
@@ -82,7 +125,7 @@ $(".pagination a").unbind();
 
 function fnAddUpdateService(sType, sServiceId) {
 	$(".service-modal .modal-body input[type=text]").css("border-color", "#ccc");
-
+	
 	switch(sType) {
 		case "add":
 			$(".service-modal-header").html("Add Service");
@@ -113,7 +156,7 @@ function fnAddUpdateService(sType, sServiceId) {
 			switch(sType) {
 				case "add":
 					$.ajax({
-						url: sBaseUrl + "add_service/",
+						url: "add_service",
 						data: oData,
 						type: "POST",
 						dataType: "json",
@@ -131,7 +174,7 @@ function fnAddUpdateService(sType, sServiceId) {
 					oData.service_id = sServiceId;
 					oData.ajax = 1;
 					$.ajax({
-						url: sBaseUrl + "update_service/",
+						url: "update_service",
 						data: oData,
 						type: "POST",
 						dataType: "json",
@@ -163,17 +206,42 @@ function fnGetFormData() {
 	return oData;
 }
 
+function fnGetTableHeads() {
+	var sModalInputLayout = 	'<div class="service-form-container">' +
+									'<form class="form-horizontal">';
+
+	$.each($(".services-table-container table thead th"), function(iIndex, oObj){
+		var sHeadText = $(oObj).text();
+		var sHeadId = sHeadText.replace(/ /g, "_").toLowerCase();
+		sHeadText = sHeadText.replace(/_/g, " ");
+		var sStyle = (sHeadId != "id" ? "" : "style='display:none;'");
+
+		sModalInputLayout +=	'<div class="control-group">' +
+									'<label class="control-label" '+sStyle+' for="'+sHeadId+'">'+sHeadText+': </label>' +
+									'<div class="controls">' +
+										'<input type="text" '+sStyle+' id="'+sHeadId+'" placeholder="Type '+sHeadText+'..."/>' +
+									'</div>' +
+								'</div>';
+
+	});
+
+	sModalInputLayout += 	'</form>' +
+								'</div>';
+
+	return sModalInputLayout;
+}
+
+//WHY DOESN'T THIS WORK!!!
 function fnPopulateModalInput(oTableRow, sServiceId) {
-	$("#service_id").val($(oTableRow).children("td").eq(0).html());
+	$("#id").val($(oTableRow).children("td").eq(0).html());
 	$("#service_name").val($(oTableRow).children("td").eq(1).html());
 	$("#service_type").val($(oTableRow).children("td").eq(2).html());
 	$("#service_location").val($(oTableRow).children("td").eq(3).html());
 	$("#service_contact").val($(oTableRow).children("td").eq(4).html());
 	$("#service_contact_telephone").val($(oTableRow).children("td").eq(5).html());
-
 }
 
-
+//Simple Form Validator
 function fnValidation(sContainerDivClass) {
 		var iValidCount = 0;
 		$.each($(sContainerDivClass + " input[type=text]"), function(iIndex, oObj){

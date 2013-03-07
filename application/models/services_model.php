@@ -6,15 +6,8 @@
     }
 
     function get_services_list() {
-    	$query = $this->db->query('SELECT id, 
-                                        service_name, 
-                                        service_type, 
-                                        service_location, 
-                                        service_contact, 
-                                        service_contact_telephone 
-                                        FROM services');
-                                    // LIMIT ?
-                                    // OFFSET ?', array($limit, (int) $offset));
+    	$query = $this->db->query('SELECT * FROM services');
+
     	$results = array();
         $total_results_count = $this->db->get("services")->num_rows();
     	foreach ($query->result() as $service) {
@@ -23,7 +16,7 @@
     	
     	return array(
             "results" => $results,
-            "total_count" => $total_results_count
+            "field_names" => $this->db->list_fields('services')
             );
     }
 
@@ -72,15 +65,39 @@
         );
 
         $this->db->where('id', $service_id);
-        $query = $this->db->update('services', $data);
-
-        return $query;
+        
+        return $this->db->update('services', $data);
     }
 
     function remove_service($service_id) {
-        $query = $this->db->delete('services', array('id' => $service_id));
+        return $this->db->delete('services', array('id' => $service_id));
+    }
 
-        return $query;
+    function get_service_types() {
+        return $this->db->get('service_type');
+    }
+
+    function add_service_type($service_type_name, $service_type_description) {
+        $data = array(
+            "service_type_name" => $service_type_name,
+            "description" => $service_type_description);
+
+        return $this->db->insert('service_type', $data);
+    }
+
+    function remove_service_type($service_type_id) {
+        return $this->db->delete('service_type', array("id" => $service_type_id));
+
+    }
+
+    function update_service_type($service_type_name, $service_type_description) {
+        $data = array(
+            "service_type_name" => $service_type_name,
+            "description" => $service_type_description);
+
+        $this->db->where('id', $service_type_id);
+
+        return $this->db->update('service_type', $data);
     }
 }
 
