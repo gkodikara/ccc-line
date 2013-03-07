@@ -5,7 +5,7 @@ Class Login extends CI_Model {
     }
     
     function check_login() {
-        if($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $data['username'] = $session_data['username'];
             $this->load->view('home', $data);
