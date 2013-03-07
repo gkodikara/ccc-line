@@ -21,6 +21,7 @@ function fnInitDatatable(bDestroyExisting) {
 function fnInit() {
 	$(".services-table-container").undelegate(".add-service-button", "click");
 	$(".services-table-container").delegate(".add-service-button", "click", function(){
+		$(".service-modal .modal-body .service-form-container").html(fnGetTableHeads());
 		fnAddUpdateService("add");
 	});
 
@@ -28,7 +29,6 @@ function fnInit() {
 	$(".services-table-container table tbody").delegate("tr", "click", function(){
 
 		var sSelectedRowId = $(this).children("td:first-child").html();
-
 		$(".service-modal .modal-body .service-form-container").html(fnGetTableHeads());
 
 		fnPopulateModalInput($(this), sSelectedRowId);
@@ -125,7 +125,6 @@ $(".pagination a").unbind();
 
 function fnAddUpdateService(sType, sServiceId) {
 	$(".service-modal .modal-body input[type=text]").css("border-color", "#ccc");
-	
 	switch(sType) {
 		case "add":
 			$(".service-modal-header").html("Add Service");
@@ -148,15 +147,15 @@ function fnAddUpdateService(sType, sServiceId) {
 	$(".service-modal").modal();
 
 	$(".service-modal").undelegate(".service-save", "click");
-	$(".service-modal").delegate(".service-save", "click", function(){		
+	$(".service-modal").delegate(".service-save", "click", function(){	
 		if (fnValidation(".service-modal .modal-body form")) {
 			fnToggleLoading();
 			var oData = fnGetFormData();
-			
+			console.debug(oData);
 			switch(sType) {
 				case "add":
 					$.ajax({
-						url: "add_service",
+						url: "add_service/",
 						data: oData,
 						type: "POST",
 						dataType: "json",
@@ -174,7 +173,7 @@ function fnAddUpdateService(sType, sServiceId) {
 					oData.service_id = sServiceId;
 					oData.ajax = 1;
 					$.ajax({
-						url: "update_service",
+						url: "update_service/",
 						data: oData,
 						type: "POST",
 						dataType: "json",
@@ -207,6 +206,7 @@ function fnGetFormData() {
 }
 
 function fnGetTableHeads() {
+	console.debug("reaaaa")
 	var sModalInputLayout = 	'<div class="service-form-container">' +
 									'<form class="form-horizontal">';
 
@@ -252,7 +252,8 @@ function fnValidation(sContainerDivClass) {
 				iValidCount++;
 			}
 		});
-		if ($(sContainerDivClass + " input[type=text]").length == iValidCount) {
+		console.debug(iValidCount)
+		if (($(sContainerDivClass + " input[type=text]").length - 1) == iValidCount) {
 			return true;
 		} else {
 			return false;
