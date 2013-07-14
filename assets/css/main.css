@@ -73,8 +73,8 @@ header {
 }
 
 .menu-logo img {
-	height: 47px;
-	width: 100px;
+	height: 46px;
+	width: 220px;
 	padding-left: 5px;
 	position: relative;
 	top: 3px;
@@ -91,4 +91,30 @@ header {
 
 .account-box span {
 	margin: 0px 5px 0px 5px;
+}
+
+.new-call-container {
+
+}
+
+.new-call-container form {
+	width: 60%;
+	margin: 0 auto;
+	padding: 30px;
+	border: 5px solid #4F9DEF;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-o-border-radius: 4px;
+	box-shadow: 2px 2px 6px #777777;
+}
+
+.new-call-container form .control-group .controls textarea, .new-call-container form .control-group .controls input {
+	background: #f8f8f8;
+}
+
+
+.new-call-container form .control-group .controls textarea {
+	min-height: 100px;
 }

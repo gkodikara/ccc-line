@@ -8,6 +8,8 @@ Class Login extends CI_Model {
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $data['username'] = $session_data['username'];
+            $data['user_id'] = $session_data['id'];
+
             $this->load->view('home', $data);
         } else {
             //If no session, redirect to login page
@@ -15,5 +17,3 @@ Class Login extends CI_Model {
         }
     }      
 }
-
- ?>

@@ -100,6 +100,3 @@
         return $this->db->update('service_type', $data);
     }
 }
-
-
-?>

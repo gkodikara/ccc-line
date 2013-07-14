@@ -64,6 +64,18 @@ table {
 	margin: 0 auto;
 }
 
+.question-container {
+	width: 95%;
+	margin: 0 auto;
+	margin-top: 50px;
+}
+
+.question-container .table-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	width: 100%;
+}
+
 .services-table-container, label {
 	/*font-size: 12px !important;*/
 }

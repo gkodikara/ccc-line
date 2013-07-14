@@ -21,7 +21,7 @@
     </div>
 </div>
 <br/>
-<p class="text-center muted">Copyright GregKodikara.com</p>
+<p class="text-center muted">© Copyright GregKodikara.com</p>
 
 
 

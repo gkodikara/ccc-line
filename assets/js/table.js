@@ -83,13 +83,12 @@ function fnToggleLoading() {
 }
 
 function fnDeleteService() {
-	var bConfirm = confirm("Are you sure you want to delete this service?");
-	if (bConfirm) {
+	if (confirm("Are you sure you want to delete this service?")) {
 		fnToggleLoading();
 		$.ajax({
 			type: "POST",
 			url: "services/remove_service",
-			data: { "service_id": $("#service_id").val() },
+			data: { "service_id": $(".modal-body #id").val() },
 			dataType: "json",
 			success: function(response) {
 				fnToggleLoading();
