@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://gkodikara.dev/codeigniter/ccc/';
+$config['base_url']	= 'http://localhost/~gkodikara/gkodikara.dev/codeigniter/ccc/';
 
 /*
 |--------------------------------------------------------------------------
