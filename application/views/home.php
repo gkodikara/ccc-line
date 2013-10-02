@@ -3,6 +3,7 @@
 		<a href="/">
 			<img src="<?= base_url(); ?>assets/img/internal/logo_mini.png"/>
 		</a>
+		
 	</div>
 	<div class="account-box pull-right">
 		<span>Welcome <?php echo $username; ?>!</span>

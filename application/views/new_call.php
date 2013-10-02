@@ -84,6 +84,20 @@
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="ageRange">Callers age: </label>
+					<div class="controls">
+						<select class="span7" id="ageRange" data-placeholder="Select Age Range">
+							<option value></option>
+							<option value="<15">Under 15</option>
+							<option value="15-25">15-25</option>
+							<option value="26-35">26-35</option>
+							<option value="36-50">36-50</option>
+							<option value="51-64">51-64</option>
+							<option value=">65">Over 65</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
 					<label class="control-label" for="inputEmail">Language Spoken: </label>
 					<div class="controls">
 						<select class="span7" id="language_spoken" data-placeholder="Select Language">
@@ -136,6 +150,11 @@
 							<option value="active_listening">Active Listening</option>
 							<option value="other">Other</option>
 						</select>
+					</div>
+					<br/>
+					<label class="control-label" for="otherResponse">If "Other", please specify: </label>
+					<div class="controls">
+						<textarea class="span12" id="other_response"></textarea>
 					</div>
 				</div>
 
