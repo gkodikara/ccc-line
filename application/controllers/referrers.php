@@ -37,6 +37,11 @@ class Referrers extends CI_Controller {
 		foreach($service_data["results"] as $result_row) {
 			$table_string .= "<tr data-item-id=".$result_row["id"].">";
 			foreach($result_row as $result_cell_id => $value) {
+                                if($result_cell_id == 'service_type')
+                                {
+                                    $table_string .= "<td id='' data-id='".$result_cell_id."'>". $this->service_type_id($result_row["id"])."</td>";
+                                }
+                                else
 				$table_string .= "<td id='' data-id='".$result_cell_id."'>".$value."</td>"; 
 				// var_dump($result_row);			
 			}
@@ -44,19 +49,25 @@ class Referrers extends CI_Controller {
 		}
 
 		$table_string .= "<tbody></table>";
-
+                
+                $service_type =  $this->get_referreral_categories();
+                
 		$data = array(
 			"services_table" => $table_string,//$this->table->generate($service_data["results"]),
-			"field_names_data" => $field_names
+			"field_names_data" => $field_names,
+                        "service_type" => $service_type
 		);
-
+                
+//                $data['service_type'] = $this->services_model->get_referreral_categories();
+                
 		if ($return_json) {
 			echo json_encode($data);
 		} else {
+//                    var_dump($data);die;
 			$this->load->view("services_table", $data);
 		}
 	}
-
+        
 	function field_name_process($field_names) {
 		$field_name_html = "";
 		$field_names_readable = array();
@@ -69,11 +80,12 @@ class Referrers extends CI_Controller {
 			$field_name_readable = ucfirst(str_replace("_", " ", $field));
 			// array_push($field_names_underscore, $field_name);
 			array_push($field_names_readable, $field_name_readable);
-
+                        
 			$field_name_html .= "<label><input class='field-name-select' data-toggle='' type='checkbox' col-index='".$count."' value='".$field_name_readable."'/> ".$field_name_readable."</label>";
 			$count++;
 		}
 
+                
 		$return_array = array("field_name_html" => $field_name_html, 
 								"field_names_readable" => $field_names_readable);
 
@@ -113,7 +125,8 @@ class Referrers extends CI_Controller {
 		$service_fax = $this->input->post("service_fax");
 		$service_website = $this->input->post("service_website");
 		$service_comments = $this->input->post("service_comments");
-
+                
+             
 		$this->services_model->add_service($service_name, 
 			$service_type, 
 			$service_location, 
@@ -127,7 +140,7 @@ class Referrers extends CI_Controller {
 		$service_id = $this->input->post("service_id");
 		$service_name = $this->input->post("service_name");
 		$service_type = $this->input->post("service_type");
-		$service_location = $this->input->post("service_location");
+		$service_location = $this->input->post("service_address");
 		$service_contact = $this->input->post("service_contact");
 		$service_contact_telephone = $this->input->post("service_contact_telephone");
 
@@ -147,7 +160,7 @@ class Referrers extends CI_Controller {
 		$delete_service_id = $this->input->post("service_id");
 
 		$this->services_model->remove_service($delete_service_id);
-
+ 
 		return $this->get_services(true);
 	}
 
@@ -179,6 +192,37 @@ class Referrers extends CI_Controller {
 			$service_type_name, 
 			$service_type_description);
 	}
-
+        
+        function get_referreral_categories()
+        {
+            $result = "";
+            $result .= '<div id="dropdown_div" style="display: none">';
+            $var = $this->services_model->get_referreral_categories();
+            foreach ($var as $val) {
+                              $result .=  '<option value='.$val['id'].'>'.$val['category_name'].'</option>';
+                            }
+                            
+           $result .= '</div>';                 
+                            return $result;
+        }
+        
+        function service_type_id($id)
+        {
+            $val = $this->services_model->service_type_id($id);
+            $res ="";
+            $i =0;
+            foreach ($val as $value)
+            {
+                if($i != 0)
+                {
+                    $res .= ',';
+                }
+                
+                $res .=$value['category_name'];
+                $i++;
+            }
+            
+            return $res;
+        }
 
 }
