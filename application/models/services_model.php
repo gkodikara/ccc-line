@@ -3,8 +3,8 @@
 
     function __construct() {
         parent::__construct();
-    }
-
+    } 
+ 
     function get_services_list() {
     	$query = $this->db->query('SELECT * FROM services');
 

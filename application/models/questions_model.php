@@ -60,7 +60,7 @@
 
     function get_caller_table() {
     	$table_headers = $this->db->list_fields('callers');
-        $inserted = array('   referral_given   ');
+        $inserted = array('   referral_given   ');  
         array_splice( $table_headers,12,0, $inserted );  
     	foreach ($this->db->get('callers')->result_array() as $callers) {
     		 $newArray = array_slice($callers, 0, 12, true) +

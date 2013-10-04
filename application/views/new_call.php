@@ -128,7 +128,19 @@
 						</select>
 					</div>
 				</div>
-				<div class="control-group">
+				
+                                <div class="control-group">
+					<label class="control-label" for="referral">Referral Given: </label>
+					<div class="controls">
+						<select id="referral" class="span12" data-placeholder="Select Outcome(s) from the call" multiple >
+							<?php foreach($static_fields['referral'] as $referral) {
+								echo '<option value="'.$referral->id.'">'.$referral->category_name.'</option>';
+							} ?>
+						</select>
+					</div>
+				</div>
+                                
+                                <div class="control-group">
 					<label class="control-label" for="inputEmail">Caller Feelings: </label>
 					<div class="controls">
 						<textarea class="span12" id="caller_feelings" required></textarea>
