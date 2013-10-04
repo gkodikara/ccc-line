@@ -1,8 +1,8 @@
 <?php date_default_timezone_set("Australia/Canberra"); ?>
 <div class="new-call-container">   
-	<h3>New Call</h3>
+	<h3>New Call</h3> 
 	<br/>
-	<div class="row-fluid ">
+	<div class="row-fluid "> 
 		<div class="container">
 			<form class="form-horizontal">
 				<div class="control-group">

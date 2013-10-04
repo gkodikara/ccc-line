@@ -1,7 +1,6 @@
-
 <div class="services-table-container">
     <h3>services</h3>
-    <br/>
+    <br/> 
     <div class="table-wrapper">
         <?= $services_table; ?>
                         <?php
@@ -10,7 +9,7 @@
                         }
                         ?>
         </div>
-    </div>
+    </div> 
 </div>
 <div style="display:none;" class="service-modal modal fade">
     <div class="modal-header">
