@@ -23,15 +23,17 @@ $(".submit-form").click(function(e){
 	oData.sDiscussion2 = $("#discussion_2").val();
 	oData.sDiscussion3 = $("#discussion_3").val();
 	oData.sFurtherTraining = $("#further_training").val();
-	
+	oData.referral = $("#referral").val();
 
+       
+        
 	$.ajax({
 		type: "POST",
 		data: oData,
 		url: "new_call_log",
 		dataType: "json",
 		beforeSend: function() {
-
+                   
 		},
 		success: function(response) {
 			console.debug(response);
