@@ -212,7 +212,7 @@
 		</div>
 	</div>
 </div>
-
+ 
 <div style="display: none" class="service-modal modal fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
