@@ -53,7 +53,7 @@
         
         $referral = $call_data_array['referral'];
         foreach ($referral as $value) {
-            $this->db->insert('caller_referreral_link', array('referreral_id'=>$value,'caller_id'=>$id));
+            $this->db->insert('caller_service_link', array('service_id'=>$value,'caller_id'=>$id));
         }
         
     }
@@ -61,8 +61,10 @@
     function get_caller_table() {
     	$table_headers = $this->db->list_fields('callers');
         $inserted = array('   referral_given   ');  
+        
         array_splice( $table_headers,12,0, $inserted );  
-    	foreach ($this->db->get('callers')->result_array() as $callers) {
+    	
+        foreach ($this->db->get('callers')->result_array() as $callers) {
     		 $newArray = array_slice($callers, 0, 12, true) +
                             $this->get_caller_referral($callers['id']) +
                             array_slice($callers, 12, NULL, true);
@@ -70,15 +72,14 @@
                 $table_data[] = $newArray ;
                    
     	}	
-            
     	return array('table_headers' => $table_headers, 'table_data' => $table_data);
     }
     
     function get_caller_referral($id)
     {
-        $this->db->select('rc.category_name');
-        $this->db->from('referreral_categories as rc');
-        $this->db->join('caller_referreral_link crl', 'crl.referreral_id = rc.id','inner');
+        $this->db->select('sr.service_name');
+        $this->db->from('services as sr');
+        $this->db->join('caller_service_link crl', 'crl.service_id = sr.id','inner');
         $this->db->where('crl.caller_id',$id);
         $result = $this->db->get();
         
@@ -92,7 +93,7 @@
                 {
                     $return_val .=',';
                 }
-                $return_val .= $val->category_name;
+                $return_val .= $val->service_name;
                 $i++;
             }
         }
@@ -106,6 +107,22 @@
         );
         
         return $val;
+    }
+    
+    function get_service_table()
+    {
+        $table_headers = array(
+           'id', 'service name','service type','address/region'
+        );
+        
+        $this->db->select('id,service_name,service_type,service_address');
+        $this->db->from('services');
+        $val = $this->db->get();
+        $table_data = $val->result_array();
+        
+        
+    	return array('table_headers' => $table_headers, 'table_data' => $table_data);
+        
     }
 
 }
