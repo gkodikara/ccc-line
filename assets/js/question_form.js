@@ -1,7 +1,42 @@
+$(document).ready(function(){
+	oDataTable = $("table").dataTable({
+		"sPaginationType": "full_numbers",
 
+	});
+//	$('.question-container table').wrap('<div class="table-wrapper" />');
+});
 $( "#date_of_call" ).datepicker({dateFormat: "dd-mm-yy"});
 $('.time-field').timeEntry();
 $("select").chosen();
+
+
+$('#referral_chzn').click(function ()
+{
+   $(".service-modal").modal();
+});
+
+$("table tbody").delegate("tr", "click", function() {
+
+        var sSelectedRowId = $(this).children("td:first-child").html();
+//        alert($(this).children('td').eq(1));
+        var service_name = $(this).children("td:first-child").next().html();
+        $(".service-modal .modal-body .service-form-container").html(fnGetTableHeads());
+    var add = 1;
+        $('#referral option').each(function() {
+    if ($(this).val() == sSelectedRowId)
+        {   
+            this.selected = true;
+            add = 0;
+        }
+        });
+        
+    if(add == 1)
+        $('#referral').append('<option selected value='+sSelectedRowId+'>'+service_name+'</option>');
+        $('#referral').trigger("liszt:updated");
+        
+    });
+
+
 
 $(".submit-form").click(function(e){
 	var oData = {};
