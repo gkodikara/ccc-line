@@ -13,8 +13,8 @@ $("select").chosen();
 $('#referral_chzn').click(function ()
 {
    $(".service-modal").modal();
-}); 
-
+});
+ 
 $("table tbody").delegate("tr", "click", function() {
 
         var sSelectedRowId = $(this).children("td:first-child").html();
