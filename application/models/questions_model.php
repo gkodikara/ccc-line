@@ -12,7 +12,7 @@
         
     	return array('outcome_codes'=>$outcome_array, 'issue_codes'=>$issue_array , 'referral' =>$referral_array)  ;
     }
-
+ 
     function get_outcomes() {
     	return $this->db->get('outcome_codes');
     }

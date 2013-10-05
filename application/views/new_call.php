@@ -132,9 +132,9 @@
                                 <div class="control-group">
 					<label class="control-label" for="referral">Referral Given: </label>
 					<div class="controls">
-						<select id="referral" class="span12" data-placeholder="Select Outcome(s) from the call" multiple >
+						<select id="referral" class="span12" data-placeholder="Select Referral(s) from the call" multiple >
 							<?php foreach($static_fields['referral'] as $referral) {
-								echo '<option value="'.$referral->id.'">'.$referral->category_name.'</option>';
+//								echo '<option value="'.$referral->id.'">'.$referral->category_name.'</option>';
 							} ?>
 						</select>
 					</div>
@@ -211,5 +211,22 @@
 
 		</div>
 	</div>
+</div>
+
+<div style="display: none" class="service-modal modal fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="service-modal-header">service</h4>
+    </div>
+    <div class="modal-body">
+        <div class="service-container">
+         
+                <?= $services_table; ?>
+         </div>
+    </div>
+    <div class="modal-footer">
+       <a href="#" class="btn" data-dismiss="modal"><i class="icon-remove"></i> Close</a>
+    </div>
+    <div class="loader add-service-toggle"></div>
 </div>
 <script type="text/javascript" src="<?= base_url(); ?>assets/js/question_form.js"></script>
