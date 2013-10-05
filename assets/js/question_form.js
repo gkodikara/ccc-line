@@ -13,7 +13,7 @@ $("select").chosen();
 $('#referral_chzn').click(function ()
 {
    $(".service-modal").modal();
-});
+}); 
 
 $("table tbody").delegate("tr", "click", function() {
 
