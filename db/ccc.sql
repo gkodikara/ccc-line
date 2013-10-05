@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 04, 2013 at 10:13 AM
+-- Generation Time: Oct 05, 2013 at 11:33 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.3.13
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `callers` (
   `discussion_3` mediumblob NOT NULL,
   `further_training` varchar(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `callers`
@@ -57,28 +57,34 @@ INSERT INTO `callers` (`id`, `log_date`, `user_id`, `caller_district`, `date_of_
 (4, '2013-07-13 22:24:33', 3, 'Badulla', '09-07-2013', '10:24:00', '11:24:00', 'Female', '<15', 'sinhala', '4', '7', 0x617764617764, 0x617766617766776166, 'reflective_skills', 0x77776567666577666577, 0x617764617764617764, 0x6177646164617765, 'yes'),
 (5, '2013-07-13 22:24:33', 3, 'Hambantota', '10-07-2013', '11:24:00', '11:28:00', 'Female', '<15', 'english', '4,7', '7', 0x617764617764, 0x617766617766776166, 'reflective_skills', 0x77776567666577666577, 0x617764617764617764, 0x6177646164617765, 'yes'),
 (6, '2013-07-13 22:24:33', 3, 'Hambantota', '10-07-2013', '11:24:00', '11:28:00', 'Female', '<15', 'english', '3,4,7', '4,7', 0x617764617764, 0x617766617766776166, 'reflective_skills,active_listening', 0x77776567666577666577, 0x617764617764617764, 0x6177646164617765, 'yes'),
-(23, '2013-10-04 15:57:37', 3, 'Ampara', '16-10-2013', '11:27:00', '11:27:00', 'Male', '<15', 'english', '1', '1,2', 0x64736661, 0x6661646661, 'reflective_skills', 0x616466616661, 0x616661736466, 0x6166616466, 'no');
+(23, '2013-10-04 15:57:37', 3, 'Ampara', '16-10-2013', '11:27:00', '11:27:00', 'Male', '<15', 'english', '1', '1,2', 0x64736661, 0x6661646661, 'reflective_skills', 0x616466616661, 0x616661736466, 0x6166616466, 'no'),
+(24, '2013-10-05 21:08:12', 3, 'Ampara', '09-10-2013', '04:45:00', '04:45:00', 'Male', '<15', 'english', '1', '1', 0x616263, 0x616263, 'questioning_skills', 0x616e63, 0x616263, 0x7575, 'yes'),
+(25, '2013-10-05 21:08:12', 3, 'Ampara', '09-10-2013', '04:45:00', '04:45:00', 'Male', '<15', 'english', '1', '1', 0x616263, 0x616263, 'questioning_skills', 0x616e63, 0x616263, 0x7575, 'yes');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `caller_referreral_link`
+-- Table structure for table `caller_service_link`
 --
 
-CREATE TABLE IF NOT EXISTS `caller_referreral_link` (
+CREATE TABLE IF NOT EXISTS `caller_service_link` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `referreral_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
   `caller_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `caller_referreral_link`
+-- Dumping data for table `caller_service_link`
 --
 
-INSERT INTO `caller_referreral_link` (`id`, `referreral_id`, `caller_id`) VALUES
+INSERT INTO `caller_service_link` (`id`, `service_id`, `caller_id`) VALUES
 (1, 1, 23),
-(2, 2, 23);
+(2, 2, 23),
+(3, 1, 24),
+(4, 1, 25),
+(5, 3, 25),
+(6, 4, 25);
 
 -- --------------------------------------------------------
 
@@ -226,8 +232,8 @@ CREATE TABLE IF NOT EXISTS `services` (
 INSERT INTO `services` (`id`, `service_name`, `service_type`, `service_contact`, `service_contact_telephone`, `services_offered`, `service_address`, `service_fax`, `service_website`, `service_comments`) VALUES
 (1, 'AAA', 0, 'Muttiah Muralitharan', '031445322', '', '', '', '', ''),
 (3, 'BBB', 3, 'Muttiah Muralitharan', '031445322', '', '', '', '', ''),
-(4, 'Burgher Alliance', 2, 'Jeuel Blackett', '0322129332', '', '', '', '', ''),
-(5, 'BBB', 3, 'Muttiah Muralitharan', '031445322', '', '', '', '', ''),
+(4, 'Burgher Alliance', 0, 'Jeuel Blackett', '0322129332', '', '', '', '', ''),
+(5, 'BBB', 0, 'Muttiah Muralitharan', '031445322', '', '', '', '', ''),
 (6, 'Burgher Alliance', 2, 'Jeuel Blackett', '0322129332', '', '', '', '', ''),
 (7, 'BBB', 3, 'Muttiah Muralitharan', '031445322', '', '', '', '', ''),
 (8, 'Burgher Alliance', 2, 'Jeuel Blackett', '0322129332', '', '', '', '', ''),
@@ -271,14 +277,17 @@ CREATE TABLE IF NOT EXISTS `service_referreral_links` (
   `referrer_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=69 ;
 
 --
 -- Dumping data for table `service_referreral_links`
 --
 
 INSERT INTO `service_referreral_links` (`id`, `referrer_id`, `service_id`) VALUES
-(52, 1, 1);
+(65, 18, 5),
+(66, 1, 1),
+(67, 0, 4),
+(68, 1, 4);
 
 -- --------------------------------------------------------
 
