@@ -4,7 +4,7 @@
 	<br/>
 	<div class="row-fluid "> 
 		<div class="container">
-			<form class="form-horizontal">
+			<form class="form-horizontal" id="new_call_form">
 				<div class="control-group">
 					<label class="control-label" for="inputEmail">Log Date: </label>
 					<div class="controls">
@@ -171,6 +171,32 @@
 				</div>
 
 				<div class="control-group">
+					<label class="control-label" for="inputEmail">Caller state of mind <br/>(Start of call): </label>
+					<div class="controls">
+						<select class="span8" id="language_spoken" data-placeholder="Select (1 = Happy, 4 = Very Upset)">
+							<option value></option>
+							<option value="4">4</option>
+							<option value="3">3</option>
+							<option value="2">2</option>
+							<option value="1">1</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">Caller state of mind <br/>(End of call): </label>
+					<div class="controls">
+						<select class="span8" id="language_spoken" data-placeholder="Select (1 = Happy, 4 = Very Upset)">
+							<option value></option>
+							<option value="4">4</option>
+							<option value="3">3</option>
+							<option value="2">2</option>
+							<option value="1">1</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group">
 					<label class="control-label" for="inputEmail">Discussion: </label>
 					<div class="controls">
 						<br/>
@@ -203,8 +229,8 @@
 				<div class="control-group">
 					<div class="controls">
 						<button class="submit-form btn btn-large btn-success"><i class="icon-white icon-thumbs-up"></i> Submit</button>
-						<button class="save-form btn btn-large btn-info"><i class="icon-white icon-file"></i> Save</button>
-						<button class="btn btn-large btn-danger"><i class="icon-white icon-trash"></i> Clear</button>
+						<!-- <button class="save-form btn btn-large btn-info"><i class="icon-white icon-file"></i> Save</button> -->
+						<button class="btn btn-large btn-danger btn-clear"><i class="icon-white icon-trash"></i> Clear</button>
 					</div>
 				</div>
 			</form>
@@ -216,11 +242,10 @@
 <div style="display: none" class="service-modal modal fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="service-modal-header">service</h4>
+        <h4 class="service-modal-header">Select Referrer</h4>
     </div>
     <div class="modal-body">
         <div class="service-container">
-         
                 <?= $services_table; ?>
          </div>
     </div>

@@ -1,5 +1,5 @@
 <div class="services-table-container">
-    <h3>services</h3>
+    <h3>Referrers</h3>
     <br/> 
     <div class="table-wrapper">
         <?= $services_table; ?>

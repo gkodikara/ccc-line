@@ -36,6 +36,9 @@ $("table tbody").delegate("tr", "click", function() {
         
     });
 
+$(".btn-clear").click(function(e){
+	$("#new_call_form").reset();
+});
 
 
 $(".submit-form").click(function(e){
@@ -48,6 +51,8 @@ $(".submit-form").click(function(e){
 	oData.sStartTime = $("#start_time").val();
 	oData.sEndTime = $("#end_time").val();
 	oData.sGender = $("#gender").val();
+	oData.sAge = $("#ageRange").val();
+
 	oData.sLanguageSpoken = $("#language_spoken").val();
 	oData.aChosenIssues = $("#major_issues").val();
 	oData.aChosenOutcomes = $("#outcome_actions").val();
@@ -71,10 +76,12 @@ $(".submit-form").click(function(e){
                    
 		},
 		success: function(response) {
-			console.debug(response);
+			if (response) {
+				$("#new_call_form").reset();
+				alert("Submitted");
+			}
 		},
 		error: function(error) {
-			console.debug("error", error);
 
 		}
 	});

@@ -36,6 +36,7 @@
             "start_of_call" => $call_data_array['sStartTime'], 
             "end_of_call" => $call_data_array['sEndTime'],
             "caller_gender" => $call_data_array['sGender'],
+            "caller_age" => $call_data_array['sAge'],
             "language_spoken" => $call_data_array['sLanguageSpoken'],
             "major_issues" => implode(",", $call_data_array['aChosenIssues']),
             "outcome" => implode(",", $call_data_array['aChosenOutcomes']),
@@ -54,6 +55,10 @@
         $referral = $call_data_array['referral'];
         foreach ($referral as $value) {
             $this->db->insert('caller_service_link', array('service_id'=>$value,'caller_id'=>$id));
+        }
+
+        if ($query) {
+            return true;
         }
         
     }

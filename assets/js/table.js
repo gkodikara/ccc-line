@@ -13,7 +13,7 @@ function fnInitDatatable(bDestroyExisting) {
         "sPaginationType": "full_numbers"
     });
 
-    var sAdditionalButtons = '<button class="btn add-service-button"><i class="icon-plus"></i> Add Refferer</button>' +
+    var sAdditionalButtons = '<button class="btn add-service-button"><i class="icon-plus"></i> Add Referrer</button>' +
             '<button rel="popover" class="btn option-popover" data-placement="bottom" data-html="true" data-original-title="Choose Fields"><i class="icon-th-list"></i> Choose Fields</button>';
 
     $(".dataTables_filter").after(sAdditionalButtons);
