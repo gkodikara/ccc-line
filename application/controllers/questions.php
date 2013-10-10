@@ -22,6 +22,7 @@ class Questions extends CI_Controller {
 		parent::__construct();
 		$this->load->model("login");
 		$this->load->model("questions_model");
+                $this->load->model('services_model');
 		$this->load->library("table");
 	}
 
@@ -31,7 +32,19 @@ class Questions extends CI_Controller {
 
 	public function new_call() {
 		$data['static_fields'] = $this->questions_model->get_static_fields();
-
+                $table = $this->questions_model->get_service_table();
+		$this->table->set_heading($table['table_headers']);
+                
+                foreach ($table['table_data'] as $index => $val)
+                {
+                     $table['table_data'][$index]['service_type'] = $this->service_type_id($val['id']);
+                     
+                }
+//                var_dump($table);
+		$table_html = $this->table->generate($table['table_data']);
+                
+                $data['services_table'] = $table_html;
+                
 		$this->load->view('header');
 		$this->login->check_login();
 		$this->load->view('new_call', $data);
@@ -53,6 +66,27 @@ class Questions extends CI_Controller {
 		$this->login->check_login();
 		$this->load->view('questions', array('table_body' => $table_html));
 	}
+        
+        function service_type_id($id)
+        {
+            $val = $this->services_model->service_type_id($id);
+            $res ="";
+            $i =0;
+            foreach ($val as $value)
+            {
+                if($i != 0)
+                {
+                    $res .= ',';
+                }
+                
+                $res .=$value['category_name'];
+                $i++;
+            }
+            
+            return $res;
+        }
+        
+        
 }
 
 /* End of file welcome.php */

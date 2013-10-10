@@ -118,3 +118,23 @@ header {
 .new-call-container form .control-group .controls textarea {
 	min-height: 100px;
 }
+
+.nav li a {
+	color: white;
+}
+
+.nav {
+	position: relative;
+	top: 10px;
+	left: 20px;
+	font-size: 16px;
+}
+
+.nav .caret {
+	border-top-color: #fff !important;
+	border-bottom-color: #fff !important;
+}
+
+.nav>li>a:hover, .nav>li>a:focus {
+	background-color: #333 !important;
+}

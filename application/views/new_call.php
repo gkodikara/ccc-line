@@ -1,10 +1,10 @@
 <?php date_default_timezone_set("Australia/Canberra"); ?>
 <div class="new-call-container">   
-	<h3>New Call</h3>
+	<h3>New Call</h3> 
 	<br/>
-	<div class="row-fluid ">
+	<div class="row-fluid "> 
 		<div class="container">
-			<form class="form-horizontal">
+			<form class="form-horizontal" id="new_call_form">
 				<div class="control-group">
 					<label class="control-label" for="inputEmail">Log Date: </label>
 					<div class="controls">
@@ -84,6 +84,20 @@
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="ageRange">Callers age: </label>
+					<div class="controls">
+						<select class="span7" id="ageRange" data-placeholder="Select Age Range">
+							<option value></option>
+							<option value="<15">Under 15</option>
+							<option value="15-25">15-25</option>
+							<option value="26-35">26-35</option>
+							<option value="36-50">36-50</option>
+							<option value="51-64">51-64</option>
+							<option value=">65">Over 65</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
 					<label class="control-label" for="inputEmail">Language Spoken: </label>
 					<div class="controls">
 						<select class="span7" id="language_spoken" data-placeholder="Select Language">
@@ -114,7 +128,19 @@
 						</select>
 					</div>
 				</div>
-				<div class="control-group">
+				
+                                <div class="control-group">
+					<label class="control-label" for="referral">Referral Given: </label>
+					<div class="controls">
+						<select id="referral" class="span12" data-placeholder="Select Referral(s) from the call" multiple >
+							<?php foreach($static_fields['referral'] as $referral) {
+//								echo '<option value="'.$referral->id.'">'.$referral->category_name.'</option>';
+							} ?>
+						</select>
+					</div>
+				</div>
+                                
+                                <div class="control-group">
 					<label class="control-label" for="inputEmail">Caller Feelings: </label>
 					<div class="controls">
 						<textarea class="span12" id="caller_feelings" required></textarea>
@@ -135,6 +161,37 @@
 							<option value="reflective_skills">Reflective Skills</option>
 							<option value="active_listening">Active Listening</option>
 							<option value="other">Other</option>
+						</select>
+					</div>
+					<br/>
+					<label class="control-label" for="otherResponse">If "Other", please specify: </label>
+					<div class="controls">
+						<textarea class="span12" id="other_response"></textarea>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">Caller state of mind <br/>(Start of call): </label>
+					<div class="controls">
+						<select class="span8" id="start_som" data-placeholder="Select (1 = Happy, 4 = Very Upset)">
+							<option value></option>
+							<option value="4">4</option>
+							<option value="3">3</option>
+							<option value="2">2</option>
+							<option value="1">1</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">Caller state of mind <br/>(End of call): </label>
+					<div class="controls">
+						<select class="span8" id="end_som" data-placeholder="Select (1 = Happy, 4 = Very Upset)">
+							<option value></option>
+							<option value="4">4</option>
+							<option value="3">3</option>
+							<option value="2">2</option>
+							<option value="1">1</option>
 						</select>
 					</div>
 				</div>
@@ -172,13 +229,29 @@
 				<div class="control-group">
 					<div class="controls">
 						<button class="submit-form btn btn-large btn-success"><i class="icon-white icon-thumbs-up"></i> Submit</button>
-						<button class="save-form btn btn-large btn-info"><i class="icon-white icon-file"></i> Save</button>
-						<button class="btn btn-large btn-danger"><i class="icon-white icon-trash"></i> Clear</button>
+						<!-- <button class="save-form btn btn-large btn-info"><i class="icon-white icon-file"></i> Save</button> -->
+						<button class="btn btn-large btn-danger btn-clear"><i class="icon-white icon-trash"></i> Clear</button>
 					</div>
 				</div>
 			</form>
 
 		</div>
 	</div>
+</div>
+ 
+<div style="display: none" class="service-modal modal fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="service-modal-header">Select Referrer</h4>
+    </div>
+    <div class="modal-body">
+        <div class="service-container">
+                <?= $services_table; ?>
+         </div>
+    </div>
+    <div class="modal-footer">
+       <a href="#" class="btn" data-dismiss="modal"><i class="icon-remove"></i> Close</a>
+    </div>
+    <div class="loader add-service-toggle"></div>
 </div>
 <script type="text/javascript" src="<?= base_url(); ?>assets/js/question_form.js"></script>
