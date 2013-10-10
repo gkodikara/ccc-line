@@ -78,8 +78,7 @@ $(".submit-form").click(function(e){
                    
 		},
 		success: function(response) {
-			if (response) {
-				$("#new_call_form").reset();
+			if (response == 1) {
 				alert("Submitted");
 			}
 		},
