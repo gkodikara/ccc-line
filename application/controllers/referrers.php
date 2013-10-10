@@ -122,16 +122,24 @@ class Referrers extends CI_Controller {
 		$service_location = $this->input->post("service_address");
 		$service_contact = $this->input->post("service_contact");
 		$service_contact_telephone = $this->input->post("service_contact_telephone");
+		$services_offered = $this->input->post("services_offered");
 		$service_fax = $this->input->post("service_fax");
 		$service_website = $this->input->post("service_website");
 		$service_comments = $this->input->post("service_comments");
-                
-             
-		$this->services_model->add_service($service_name, 
+
+
+
+//
+		$this->services_model->add_service(
+			$service_name, 
 			$service_type, 
 			$service_location, 
 			$service_contact, 
-			$service_contact_telephone);
+			$service_contact_telephone,
+			$services_offered,
+			$service_website,
+			$service_comments, 
+			$service_fax);
 
 		return $this->get_services(true);
 	}
@@ -142,7 +150,14 @@ class Referrers extends CI_Controller {
 		$service_type = $this->input->post("service_type");
 		$service_location = $this->input->post("service_address");
 		$service_contact = $this->input->post("service_contact");
+		$service_fax = $this->input->post("service_fax");
+
 		$service_contact_telephone = $this->input->post("service_contact_telephone");
+		$services_offered = $this->input->post("services_offered");
+		$service_website = $this->input->post("service_website");
+		$service_comments = $this->input->post("service_comments");
+
+
 
 //
 		$this->services_model->update_service(
@@ -151,7 +166,11 @@ class Referrers extends CI_Controller {
 			$service_type, 
 			$service_location, 
 			$service_contact, 
-			$service_contact_telephone);
+			$service_contact_telephone,
+			$services_offered,
+			$service_website,
+			$service_comments,
+			$service_fax);
 
 		return $this->get_services(true);
 	}

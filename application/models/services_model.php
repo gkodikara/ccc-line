@@ -36,7 +36,8 @@
             );
     }
 
-    function add_service($service_name, $service_type, $service_location, $service_contact, $service_contact_telephone) {
+    function add_service($service_name, $service_type, $service_location, $service_contact, $service_contact_telephone, $services_offered, $service_website, $service_comments, $service_fax) {
+ 
         //This doesn't work - find out why...
         // $sql = 'INSERT INTO services (service_name, service_type, service_location, service_contact, service_contact_telephone) 
         //             VALUES ($service_name, $service_type, $service_location, $service_contact, $service_contact_telephone)';
@@ -44,12 +45,16 @@
         
         $data = array(
             "service_name" => $service_name, 
-            "service_type" => "",
+            "service_type" => "", 
             "service_address" => $service_location, 
             "service_contact" => $service_contact, 
-            "service_contact_telephone" => $service_contact_telephone
-            );
-         
+            "service_contact_telephone" => $service_contact_telephone,
+            "services_offered" => $services_offered,
+            "service_website" => $service_website,
+            "service_comments" => $service_comments,
+            "service_fax" => $service_fax
+        );
+
         $query = $this->db->insert('services', $data); 
            $id = mysql_insert_id();
            foreach ($service_type as $value) {
@@ -63,7 +68,7 @@
         return $query;
     }
 
-    function update_service($service_id, $service_name, $service_type, $service_location, $service_contact, $service_contact_telephone) {
+    function update_service($service_id, $service_name, $service_type, $service_location, $service_contact, $service_contact_telephone, $services_offered, $service_website, $service_comments, $service_fax) {
        
         $this->db->delete('service_referreral_links', array('service_id'=>$service_id));
         foreach ($service_type as $value) {
@@ -79,7 +84,11 @@
             "service_type" => "", 
             "service_address" => $service_location, 
             "service_contact" => $service_contact, 
-            "service_contact_telephone" => $service_contact_telephone
+            "service_contact_telephone" => $service_contact_telephone,
+            "services_offered" => $services_offered,
+            "service_website" => $service_website,
+            "service_comments" => $service_comments,
+            "service_fax" => $service_fax
         );
 
         $this->db->where('id', $service_id);

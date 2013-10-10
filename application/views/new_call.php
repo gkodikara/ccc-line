@@ -173,7 +173,7 @@
 				<div class="control-group">
 					<label class="control-label" for="inputEmail">Caller state of mind <br/>(Start of call): </label>
 					<div class="controls">
-						<select class="span8" id="language_spoken" data-placeholder="Select (1 = Happy, 4 = Very Upset)">
+						<select class="span8" id="start_som" data-placeholder="Select (1 = Happy, 4 = Very Upset)">
 							<option value></option>
 							<option value="4">4</option>
 							<option value="3">3</option>
@@ -186,7 +186,7 @@
 				<div class="control-group">
 					<label class="control-label" for="inputEmail">Caller state of mind <br/>(End of call): </label>
 					<div class="controls">
-						<select class="span8" id="language_spoken" data-placeholder="Select (1 = Happy, 4 = Very Upset)">
+						<select class="span8" id="end_som" data-placeholder="Select (1 = Happy, 4 = Very Upset)">
 							<option value></option>
 							<option value="4">4</option>
 							<option value="3">3</option>

@@ -46,7 +46,9 @@
             "discussion_1" => $call_data_array['sDiscussion1'],
             "discussion_2" => $call_data_array['sDiscussion2'],
             "discussion_3" => $call_data_array['sDiscussion3'],
-            "further_training" => $call_data_array['sFurtherTraining']
+            "further_training" => $call_data_array['sFurtherTraining'],
+            "start_state_of_mind" => $call_data_array['start_state_of_mind'],
+            "end_state_of_mind" => $call_data_array['end_state_of_mind']
         );
 
     	$query = $this->db->insert('callers', $data); 

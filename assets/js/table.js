@@ -156,6 +156,7 @@ function fnAddUpdateservice(sType, sserviceId) {
         if (fnValidation(".service-modal .modal-body form")) {
             fnToggleLoading();
             var oData = fnGetFormData();
+            console.debug(oData);
             switch (sType) {
                 case "add":
                     $.ajax({
@@ -165,7 +166,6 @@ function fnAddUpdateservice(sType, sserviceId) {
                         dataType: "json",
                         success: function(response) {
                             fnToggleLoading();
-                            alert(response.service_type);
                             $(".services-table-container .table-wrapper #dropdown_div").html(response.service_type);
                             $(".services-table-container .table-wrapper").html(response.services_table + response.service_type);
                             fnInitDatatable();
@@ -214,14 +214,13 @@ function fnGetFormData() {
         "service_type": $("#service_type").val(),
         "service_address": $("#service_address").val(),
         "service_contact": $("#service_contact").val(),
-        "service_fax": $("#service_contact").val(),
+        "service_fax": $("#service_fax").val(),
         "services_offered": $("#services_offered").val(),
         "service_website": $("#service_website").val(),
         "service_comments": $("#service_comments").val(),
         "service_contact_telephone": $("#service_contact_telephone").val()
 
     };
-    console.debug(oData);
     return oData;
 }
 
@@ -285,7 +284,6 @@ function fnPopulateModalInput(oTableRow, sServiceId) {
         {
         $("#" + sId).val(sVal);
         }
-        console.debug($("#" + sId));
     });
 }
 

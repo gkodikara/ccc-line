@@ -64,6 +64,8 @@ $(".submit-form").click(function(e){
 	oData.sDiscussion3 = $("#discussion_3").val();
 	oData.sFurtherTraining = $("#further_training").val();
 	oData.referral = $("#referral").val();
+	oData.start_state_of_mind = $("#start_som").val();
+	oData.end_state_of_mind = $("#end_som").val();
 
        
         
