@@ -156,7 +156,6 @@ function fnAddUpdateservice(sType, sserviceId) {
         if (fnValidation(".service-modal .modal-body form")) {
             fnToggleLoading();
             var oData = fnGetFormData();
-            console.debug(oData);
             switch (sType) {
                 case "add":
                     $.ajax({
