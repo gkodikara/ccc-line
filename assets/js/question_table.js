@@ -3,4 +3,10 @@ $(document).ready(function(){
 		"sPaginationType": "full_numbers"
 	});
 //	$('.question-container table').wrap('<div class="table-wrapper" />');
+
+$('a').click(function (){
+        alert('abc');
 });
+
+});
+
