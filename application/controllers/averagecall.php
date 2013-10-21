@@ -15,7 +15,7 @@ class Averagecall extends CI_Controller {
      $session_data = $this->session->userdata('logged_in');
      $data['username'] = $session_data['username'];
      $this->load->view('header');
-     $data['right'] = '<div style="width:50%;float:left">'. $this->date_ranger() .'<div id="avg_call" style="5%"></div><div id="table_tab" style="margin-top:20px"></div></div>' ;
+     $data['right'] = '<div style="width:50%;float:left">'. $this->date_ranger('pane1') .'<div id="pane1_avg_call" style="5%"></div><div id="table_tab" style="margin-top:20px"></div></div>' ;
 //     $data['date_ranger'] = $this->date_ranger();
      $this->load->view('averagecall', $data);
      $this->load->view('footer');
@@ -28,7 +28,7 @@ class Averagecall extends CI_Controller {
  }
 
  
- function date_ranger()
+ function date_ranger($name)
  {
      
      	
@@ -38,13 +38,13 @@ class Averagecall extends CI_Controller {
                 <span class="control-group" style="float:left;width:50%">
                     <label class="control-label" style="float: left" for="inputEmail">Start Date:</label>
                    <div class="controls controls-row">
-                   <input class="span2" type="text" id="start_date" required/>
+                   <input class="span2" type="text" id="'.$name.'_start_date" required/>
                    </div>
                </span>
                <span class="control-group" style="float:left;width:50%">
                     <label class="control-label" style="float: left" for="inputEmail">End Date:</label>
                    <div class="controls controls-row">
-                   <input class="span2" type="text" id="end_date" required/>
+                   <input class="span2" type="text" id="'.$name.'_end_date" required/>
                    </span></div>
                    <div>
 </fieldset>';
@@ -61,11 +61,15 @@ class Averagecall extends CI_Controller {
      $start = $this->input->post('start_date');
      $end = $this->input->post('end_date');
      
-     $data['table_data'] = $aveg_call->average_call_range($start,$end);
+    
+        $data['table_data'] = $aveg_call->average_call_range($start,$end);
+    
      
      $this->table->set_heading(array('Date','Number of Call'));
      
      $data_row = "";
+     
+     $table = array();
      
      foreach ($data['table_data'] as $index => $val)
                 {
@@ -86,8 +90,138 @@ class Averagecall extends CI_Controller {
      
      die;
  }
+
+ function num_caller_categories()
+ {
+     $this->load->model('averagecall_model');
+     
+     $aveg_call =  new Averagecall_model();
+     
+     $start = $this->input->post('start_date');
+     $end = $this->input->post('end_date');
+     $cat = $this->input->post('categories');
+ 
+        $data['table_data'] = $aveg_call->categories_call_range($start,$end,$cat);
+     
+     $this->table->set_heading(array('Date','Number of Call'));
+     
+     $data_row = "";
+      $table = array();
+     if(is_array($data['table_data']))
+     {
+     foreach ($data['table_data'] as $index => $val)
+                {
+                     $table['table_data'][$index] = $val;
+                }
+     $table_html = $this->table->generate($table['table_data']);
+     
+     $data['table_html'] = $table_html;
+   
+     $data_row[strlen($data_row)-1] = "";
+     
+     $data['chart'] =  $table['table_data'];
+     
+     $return_data = json_encode($data);
+     }
+     else
+     {
+         $data['table_html'] = "";
+         $data['chart'] = "";
+         $return_data = json_encode($data);
+     }
+     echo $return_data;
+     
+     die;
+ }   
+ 
+ function caller_age_categories()
+ {
+     $data['right'] = '<div style="width:50%"><lable>Select Categories:</lable> '.$this->age_dropdown().'</div><div style="width:50%;float:left">'. $this->date_ranger('pane3') .'<div id="pane3_avg_call" style="5%"></div><div id="pane3_table_tab" style="margin-top:20px"></div></div><div id="pane3_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     echo json_encode($data);
+ }
          
- function logout()
+ function Caller_Categories()
+{
+     $data['right'] = '<div style="width:50%"><lable>Select Categories:</lable> '.$this->categories_dropdown().'</div><div style="width:50%;float:left">'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" style="margin-top:20px"></div></div><div id="pane2_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     echo json_encode($data);
+}
+
+function age_dropdown()
+{
+    $val = "<select name=age id=age><option value=<15><15</option><option value=15-16>15-16</option><option value=26-30>26-30</option>
+            <option value=36-50>36-50</option><option value=51-64>51-64</option><option value=65>>65</option>
+            </select>";
+
+    return $val;
+}
+
+function categories_dropdown()
+{
+     $this->load->model('averagecall_model');
+     $this->load->helper('form');
+     
+     $aveg_call =  new Averagecall_model();
+     
+     $arr = $aveg_call -> categories_dropdown();
+    
+      $val = '<select multiple name=categories id=categories>';
+    
+     
+     foreach ($arr as $key => $value) {
+          $val .= '<option value='.$key.'>'.$value.'</option>';
+     }
+     $val .='</select>';
+     
+//     $val = form_dropdown('categories', $arr);
+     
+     
+     return $val;
+}
+
+function num_caller_age()
+{
+    
+     $this->load->model('averagecall_model');
+     
+     $aveg_call =  new Averagecall_model();
+     
+     $start = $this->input->post('start_date');
+     $end = $this->input->post('end_date');
+     $cat = $this->input->post('age');
+ 
+     $data['table_data'] = $aveg_call->age_call_range($start,$end,$cat);
+     
+     $this->table->set_heading(array('Date','Number of Call'));
+     
+     $data_row = "";
+     if(is_array($data['table_data'] ))
+     {
+     foreach ($data['table_data'] as $index => $val)
+                {
+                    
+                     $table['table_data'][$index] = $val;
+                }
+     $table_html = $this->table->generate($table['table_data']);
+     
+     $data['table_html'] = $table_html;
+   
+     $data_row[strlen($data_row)-1] = "";
+     
+     $data['chart'] =  $table['table_data'];
+     
+     $return_data = json_encode($data);
+     }
+     else
+     {
+         $data['table_html'] = "";
+         $data['chart'] = "";
+          $return_data = json_encode($data);
+     }
+     echo $return_data;
+     
+     die;
+}
+function logout()
  {
    $this->session->unset_userdata('logged_in');
    session_destroy();
