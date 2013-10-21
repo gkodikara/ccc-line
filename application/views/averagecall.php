@@ -33,6 +33,7 @@
       
     </script>
 
+<script type="text/javascript" src="<?= base_url(); ?>assets/js/averagecall.js"></script>
 
 
 
@@ -46,8 +47,7 @@
     <div class="tab-content" style="overflow: inherit">
     <div id="pane1" class="tab-pane active">
         <?= $right; ?>
-        
-        <div id="chart_div" style="float:right;width: 50%; height:700px"></div>
+        <div id="pane1_chart_div" style="float:right;width: 50%; height:700px"></div>
     </div>
     <div id="pane2" class="tab-pane">
        
@@ -61,5 +61,3 @@
 </div><!-- /.tabbable -->
 </div>
 
-
-<script type="text/javascript" src="<?= base_url(); ?>assets/js/averagecall.js"></script>

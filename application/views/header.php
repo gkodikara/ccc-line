@@ -20,7 +20,7 @@
 	<script type="text/javascript" src="<?= base_url(); ?>assets/js/chosen.jquery.min.js"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/js/jquery.validate.js"></script>
 
-
+        <script type="text/javascript" src="<?= base_url(); ?>assets/js/moment.min.js"></script>
 
 
   </head>
