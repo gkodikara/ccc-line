@@ -63,6 +63,41 @@ Class Averagecall_model extends CI_Model {
         
     }
     
+    function num_province_Categories($start_date,$end_date,$province)
+    {
+        $str ="";
+        foreach ($province as $value) {
+            $str  .= '"'.$value.'",';
+        }
+        
+          $str =  substr($str,0, strlen($str)-1);
+        
+        $sql = "SELECT `date_of_call` AS Date1, count( `id` ) AS Number_of_call
+        FROM callers
+        WHERE `date_of_call`
+        BETWEEN '2013-07-01'
+        AND '2013-10-31'
+        AND caller_district
+        IN ($str)
+        GROUP BY `date_of_call`
+        ";
+        
+//     echo $sql;
+                $res = $this->db->query($sql);
+                if($res->num_rows()>0)
+                {
+                  
+                    return $res->result_array();
+                }
+                else
+                {
+                   
+                    return "";
+                }
+        
+    }
+    
+            
     function age_call_range($start_date,$end_date,$age)
     {
         
