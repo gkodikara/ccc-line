@@ -384,6 +384,90 @@ $(document).ready(function() {
             case 'Caller provinces':
                 {
                     div_name = 'pane4';
+                    $.ajax({
+                                type: "POST",
+                                url: "averagecall/province_Categories",
+                                
+                                success: function(response) {
+                                    var data = jQuery.parseJSON(response);
+                                    $('#pane4').html(data['right']);
+                                    $("#"+div_name+"_start_date").datepicker({dateFormat: "yy-mm-dd"});
+                                    $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
+                                    $('.time-field').timeEntry();
+                                    $("select").chosen();
+                                     $('#district').change(function ()
+                                        {
+                                              if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "" && $('#district').val())
+                                                {
+
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "averagecall/num_province_Categories",
+                                                        data: {"start_date": $('#pane4_start_date').val(), 'end_date': $('#pane4_end_date').val(),'district':$('#district').val()},
+                                                        success: function(response) {
+
+                                                            var data = jQuery.parseJSON(response);
+                                                            $('#pane4_table_tab').css('margin-top', '20%');
+                                                            $('#pane4_table_tab').html(data['table_html']);
+
+                                                            drawChart(data['chart']);
+                                                        }
+                                                    });
+                                                }
+                                        });
+                                      $('#pane4_start_date').change(function() {
+                                                   
+                                                  if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "" && $('#district').val())
+                                                  {
+                                                     
+                                                      var d = new Date()
+
+                                                      $.ajax({
+                                                          type: "POST",
+                                                          url: "averagecall/num_province_Categories",
+                                                          data: {"start_date": $('#pane4_start_date').val(), 'end_date': $('#pane4_end_date').val(),'district':$('#district').val()},
+                                                          success: function(response) {
+                                          //                    alert(response['table_html']);
+
+                                                              var data = jQuery.parseJSON(response);
+                                                              $('#pane4_table_tab').css('margin-top', '20%');
+                                                              $('#pane4_table_tab').html(data['table_html']);
+                                                              if(data['chart'])
+                                                                  {
+                                                              drawChart(data['chart']);
+                                                                  }
+                                                              else
+                                                                {
+                                                                    $('#pane4_chart_div').html("");
+                                                                }
+                                                          }
+                                                      });
+                                                  }
+                                              });
+                                           
+                                    $('#pane4_end_date').change(function() {
+                                      
+                                        if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "" && $('#district').val())
+                                        {
+                                          
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "averagecall/num_province_Categories",
+                                                data: {"start_date": $('#pane4_start_date').val(), 'end_date': $('#pane4_end_date').val(),'district':$('#district').val()},
+                                                success: function(response) {
+                                                    
+                                                    var data = jQuery.parseJSON(response);
+                                                    $('#pane4_table_tab').css('margin-top', '20%');
+                                                    $('#pane4_table_tab').html(data['table_html']);
+
+                                                    drawChart(data['chart']);
+                                                }
+                                            });
+                                        }
+                                    }); 
+                                              
+                                }
+                            });
                    
                 }
                 break;
