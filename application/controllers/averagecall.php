@@ -134,6 +134,48 @@ class Averagecall extends CI_Controller {
      die;
  }   
  
+ function num_province_Categories(){
+          $this->load->model('averagecall_model');
+     
+     $aveg_call =  new Averagecall_model();
+     
+     $start = $this->input->post('start_date');
+     $end = $this->input->post('end_date');
+     $cat = $this->input->post('district');
+ 
+     $data['table_data'] = $aveg_call->num_province_Categories($start,$end,$cat);
+     
+     $this->table->set_heading(array('Date','Number of Call'));
+     
+     $data_row = "";
+     if(is_array($data['table_data'] ))
+     {
+     foreach ($data['table_data'] as $index => $val)
+                {
+                    
+                     $table['table_data'][$index] = $val;
+                }
+     $table_html = $this->table->generate($table['table_data']);
+     
+     $data['table_html'] = $table_html;
+   
+     $data_row[strlen($data_row)-1] = "";
+     
+     $data['chart'] =  $table['table_data'];
+     
+     $return_data = json_encode($data);
+     }
+     else
+     {
+         $data['table_html'] = "";
+         $data['chart'] = "";
+          $return_data = json_encode($data);
+     }
+     echo $return_data;
+     
+     die;
+ }
+         
  function caller_age_categories()
  {
      $data['right'] = '<div style="width:50%"><lable>Select Categories:</lable> '.$this->age_dropdown().'</div><div style="width:50%;float:left">'. $this->date_ranger('pane3') .'<div id="pane3_avg_call" style="5%"></div><div id="pane3_table_tab" style="margin-top:20px"></div></div><div id="pane3_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
@@ -146,6 +188,13 @@ class Averagecall extends CI_Controller {
      echo json_encode($data);
 }
 
+
+function province_Categories()
+{
+     $data['right'] = '<div style="width:50%"><lable>Select province:</lable> '.$this->district_dropdown().'</div><div style="width:50%;float:left">'. $this->date_ranger('pane4') .'<div id="pane4_avg_call" style="5%"></div><div id="pane4_table_tab" style="margin-top:20px"></div></div><div id="pane4_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     echo json_encode($data);
+}
+
 function age_dropdown()
 {
     $val = "<select name=age id=age><option value=<15><15</option><option value=15-16>15-16</option><option value=26-30>26-30</option>
@@ -155,7 +204,39 @@ function age_dropdown()
     return $val;
 }
 
-function categories_dropdown()
+function district_dropdown()
+{
+    $val =' <select id="district" multiple data-placeholder="Select District">
+							<option value></option>
+							<option value="Ampara">Ampara</option>
+							<option value="Anuradhapura">Anuradhapura</option>
+							<option value="Badulla">Badulla</option>
+							<option value="Batticaloa">Batticaloa</option>
+							<option value="Colombo">Colombo</option>
+							<option value="Galle">Galle</option>
+							<option value="Gampaha">Gampaha</option>
+							<option value="Hambantota">Hambantota</option>
+							<option value="Jaffna">Jaffna</option>
+							<option value="Kalutara">Kalutara</option>
+							<option value="Kandy">Kandy</option>
+							<option value="Kegalle">Kegalle</option>
+							<option value="Kilinochchi">Kilinochchi</option>
+							<option value="Kurunegala">Kurunegala</option>
+							<option value="Matale">Matale</option>
+							<option value="Matara">Matara</option>
+							<option value="Moneragala">Moneragala</option>
+							<option value="Mullaitivu">Mullaitivu</option>
+							<option value="Nuwara Eliya">Nuwara Eliya</option>
+							<option value="Polonnaruwa">Polonnaruwa</option>
+							<option value="Puttalam">Puttalam</option>
+							<option value="Ratnapura">Ratnapura</option>
+							<option value="Trincomalee">Trincomalee</option>
+							<option value="Vavuniya">Vavuniya</option>
+						</select>';
+	
+    return $val;
+}
+        function categories_dropdown()
 {
      $this->load->model('averagecall_model');
      $this->load->helper('form');
