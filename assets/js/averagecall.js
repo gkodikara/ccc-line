@@ -1,7 +1,27 @@
 
 $(document).ready(function() {
+   
     var div_name = "pane1";
- 
+    
+    
+     $("#"+div_name+"_start_date").datepicker({dateFormat: "yy-mm-dd"});
+    $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
+    $('.time-field').timeEntry();
+    $("select").chosen();
+    
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yy = today.getFullYear();
+    
+    
+//    alert(dd+'-'+mm+'-'+yy);
+    
+    $("#"+div_name+"_start_date").val(yy+'-'+mm+'-'+dd);
+    $("#"+div_name+"_end_date").val(yy+'-'+mm+'-'+dd);
+    
+    
+    
     google.load("visualization", "1", {packages: ["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart(data1) {
@@ -191,7 +211,9 @@ $(document).ready(function() {
             });
         }
     });
-
+    
+    $("#"+div_name+"_start_date").change();
+    
     $('a').click(function() {
 
         var link = this.text;
@@ -220,6 +242,18 @@ $(document).ready(function() {
                                     $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
                                     $('.time-field').timeEntry();
                                     $("select").chosen();
+                                    
+                                     var today = new Date();
+                                                            var dd = today.getDate();
+                                                            var mm = today.getMonth()+1;
+                                                            var yy = today.getFullYear();
+
+
+                                                        //    alert(dd+'-'+mm+'-'+yy);
+
+                                                            $("#"+div_name+"_start_date").val(yy+'-'+mm+'-'+dd);
+                                                            $("#"+div_name+"_end_date").val(yy+'-'+mm+'-'+dd);
+                                    
                                      $('#categories').change(function ()
                                         {
                                               if ($('#pane2_start_date').val() != "" && $('#pane2_end_date').val() != "" && $('#categories').val())
@@ -303,6 +337,18 @@ $(document).ready(function() {
                                     $('#pane3').html(data['right']);
                                     $("#"+div_name+"_start_date").datepicker({dateFormat: "yy-mm-dd"});
                                     $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
+                                    
+                                    var today = new Date();
+                                    var dd = today.getDate();
+                                    var mm = today.getMonth()+1;
+                                    var yy = today.getFullYear();
+
+
+                                //    alert(dd+'-'+mm+'-'+yy);
+
+                                    $("#"+div_name+"_start_date").val(yy+'-'+mm+'-'+dd);
+                                    $("#"+div_name+"_end_date").val(yy+'-'+mm+'-'+dd);
+                                    
                                     $('.time-field').timeEntry();
                                     $("select").chosen();
                                      $('#age').change(function ()
@@ -355,6 +401,7 @@ $(document).ready(function() {
                                                   }
                                               });
                                            
+                    $("#pane3_start_date").change();
                                     $('#pane3_end_date').change(function() {
                                       
                                         if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
@@ -378,7 +425,7 @@ $(document).ready(function() {
                                               
                                 }
                             });
-                    
+                            
                 }
                 break;
             case 'Caller provinces':
@@ -395,6 +442,18 @@ $(document).ready(function() {
                                     $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
                                     $('.time-field').timeEntry();
                                     $("select").chosen();
+                                    
+                                     var today = new Date();
+                                                            var dd = today.getDate();
+                                                            var mm = today.getMonth()+1;
+                                                            var yy = today.getFullYear();
+
+
+                                                        //    alert(dd+'-'+mm+'-'+yy);
+
+                                                            $("#"+div_name+"_start_date").val(yy+'-'+mm+'-'+dd);
+                                                            $("#"+div_name+"_end_date").val(yy+'-'+mm+'-'+dd);
+                                    
                                      $('#district').change(function ()
                                         {
                                               if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "" && $('#district').val())
@@ -409,7 +468,7 @@ $(document).ready(function() {
                                                             var data = jQuery.parseJSON(response);
                                                             $('#pane4_table_tab').css('margin-top', '20%');
                                                             $('#pane4_table_tab').html(data['table_html']);
-
+                                                            
                                                             drawChart(data['chart']);
                                                         }
                                                     });
@@ -477,8 +536,5 @@ $(document).ready(function() {
     });
 
 //	$('.question-container table').wrap('<div class="table-wrapper" />');
-    $("#"+div_name+"_start_date").datepicker({dateFormat: "yy-mm-dd"});
-    $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
-    $('.time-field').timeEntry();
-    $("select").chosen();
+    
 });

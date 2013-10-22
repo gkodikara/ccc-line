@@ -5,7 +5,7 @@ $(document).ready(function(){
 	});
 //	$('.question-container table').wrap('<div class="table-wrapper" />');
 });
-$( "#date_of_call" ).datepicker({dateFormat: "dd-mm-yy"});
+$( "#date_of_call" ).datepicker({dateFormat: "yy-mm-dd"});
 $('.time-field').timeEntry();
 $("select").chosen();
 
