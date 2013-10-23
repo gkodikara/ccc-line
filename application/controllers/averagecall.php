@@ -107,18 +107,11 @@ class Averagecall extends CI_Controller {
      
      $start = $this->input->post('start_date');
      $end = $this->input->post('end_date');
-     $cat = $this->input->post('categories');
- 
-     if($cat!="")
-     {
-     $data['table_data'] = $aveg_call->categories_call_range($start,$end,$cat);
-     }
- else {
-        $data['table_data'] = $aveg_call->average_call_range($start,$end);
-     }
+     
+     $data['table_data'] = $aveg_call->categories_call_range($start,$end);
      
      
-     $this->table->set_heading(array('Date','Number of Call'));
+     $this->table->set_heading(array('Categories','Number of Call'));
      
      $data_row = "";
       $table = array();
@@ -156,17 +149,12 @@ class Averagecall extends CI_Controller {
      
      $start = $this->input->post('start_date');
      $end = $this->input->post('end_date');
-     $cat = $this->input->post('district');
- 
-     if($cat != "")
-     {
-     $data['table_data'] = $aveg_call->num_province_Categories($start,$end,$cat);
-     }
-     else {
-        $data['table_data'] = $aveg_call->average_call_range($start,$end);
-     }
+    
+    
+     $data['table_data'] = $aveg_call->num_province_Categories($start,$end);
+    
      
-     $this->table->set_heading(array('Date','Number of Call'));
+     $this->table->set_heading(array('Province','Number of Call'));
      
      $data_row = "";
      if(is_array($data['table_data'] ))
@@ -199,20 +187,20 @@ class Averagecall extends CI_Controller {
          
  function caller_age_categories()
  {
-     $data['right'] = '<div style="width:50%"><lable>Select Categories:</lable> '.$this->age_dropdown().'</div><div style="width:50%;float:left">'. $this->date_ranger('pane3') .'<div id="pane3_avg_call" style="5%"></div><div id="pane3_table_tab" style="margin-top:20px"></div></div><div id="pane3_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     $data['right'] ='<div style="width:50%;float:left">'. $this->date_ranger('pane3') .'<div id="pane3_avg_call" style="5%"></div><div id="pane3_table_tab" style="margin-top:20px"></div></div><div id="pane3_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
      echo json_encode($data);
  }
          
  function Caller_Categories()
 {
-     $data['right'] = '<div style="width:50%"><lable>Select Categories:</lable> '.$this->categories_dropdown().'</div><div style="width:50%;float:left">'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" style="margin-top:20px"></div></div><div id="pane2_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     $data['right'] = '<div style="width:50%;float:left">'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" style="margin-top:20px"></div></div><div id="pane2_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
      echo json_encode($data);
 }
 
 
 function province_Categories()
 {
-     $data['right'] = '<div style="width:50%"><lable>Select province:</lable> '.$this->district_dropdown().'</div><div style="width:50%;float:left">'. $this->date_ranger('pane4') .'<div id="pane4_avg_call" style="5%"></div><div id="pane4_table_tab" style="margin-top:20px"></div></div><div id="pane4_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     $data['right'] = '<div style="width:50%;float:left">'. $this->date_ranger('pane4') .'<div id="pane4_avg_call" style="5%"></div><div id="pane4_table_tab" style="margin-top:20px"></div></div><div id="pane4_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
      echo json_encode($data);
 }
 
@@ -289,11 +277,11 @@ function num_caller_age()
      
      $start = $this->input->post('start_date');
      $end = $this->input->post('end_date');
-     $cat = $this->input->post('age');
+//     $cat = $this->input->post('age');
  
-     $data['table_data'] = $aveg_call->age_call_range($start,$end,$cat);
+     $data['table_data'] = $aveg_call->age_call_range($start,$end);
      
-     $this->table->set_heading(array('Date','Number of Call'));
+     $this->table->set_heading(array('Age Group','Number of Call'));
      
      $data_row = "";
      if(is_array($data['table_data'] ))

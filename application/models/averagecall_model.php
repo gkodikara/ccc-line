@@ -50,56 +50,35 @@ Class Averagecall_model extends CI_Model {
         return $temp;
     }
     
-    function categories_call_range($start_date,$end_date,$categories)
+    function categories_call_range($start_date,$end_date)
     {
         
-        $this->db->select('caller_id');
-        $this->db->from('caller_service_link');
-        $this->db->where_in('service_id',$categories);
-        $this->db->distinct();
-        $val = $this->db->get();
+                $sql = "SELECT rc.category_name as Date1,count(callers.id) as Number_of_call FROM callers \n"
+                    . "INNER JOIN caller_service_link as csl on csl.caller_id = callers .id\n"
+                    . "INNER JOIN referreral_categories as rc on rc.id = csl.service_id\n"
+                    . "WHERE callers.date_of_call between '".$start_date."' and '".$end_date."' group by csl.service_id";
                 
-        if($val->num_rows())
-        {
-            $t = $val->result_array();
-            $va = array();
-            
-            foreach ($t as $value) {
-                $va[] = $value['caller_id'];
-            }
-            
-            $str = implode(',', $va);
-            
-                $sql = "SELECT `date_of_call` as Date1,count(`id`) as Number_of_call  FROM callers WHERE `date_of_call` between '".$start_date . "' and '" .$end_date ."' and id in ($str) group by `date_of_call`";
-                
+               
                 $res = $this->db->query($sql);
-                
+                if($res->num_rows())
+                {
                 return $res->result_array();
-        }
-        else
-        {
-            return "";
-        }
+                }
+                else
+                {
+                    return "";
+                }
         
         
     }
     
-    function num_province_Categories($start_date,$end_date,$province)
+    function num_province_Categories($start_date,$end_date)
     {
-        $str ="";
-        foreach ($province as $value) {
-            $str  .= '"'.$value.'",';
-        }
-        
-          $str =  substr($str,0, strlen($str)-1);
-        
-        $sql = "SELECT `date_of_call` AS Date1, count( `id` ) AS Number_of_call
+        $sql = "SELECT `caller_district` AS Date1, count( `id` ) AS Number_of_call
         FROM callers
         WHERE `date_of_call`
         BETWEEN '".$start_date . "' and '" .$end_date ."'
-        AND caller_district
-        IN ($str)
-        GROUP BY `date_of_call`
+        GROUP BY `caller_district`
         ";
         
 
@@ -118,11 +97,11 @@ Class Averagecall_model extends CI_Model {
     }
     
             
-    function age_call_range($start_date,$end_date,$age)
+    function age_call_range($start_date,$end_date)
     {
         
         
-         $sql = "SELECT `date_of_call` as Date1,count(`id`) as Number_of_call  FROM callers WHERE `date_of_call` between '".$start_date . "' and '" .$end_date ."' and caller_age ='$age' group by `date_of_call`";
+         $sql = "SELECT `caller_age` as Date1 ,count(`id`) as Number_of_call  FROM callers WHERE `date_of_call` between '".$start_date . "' and '" .$end_date ."' group by `caller_age`";
        
      
                 $res = $this->db->query($sql);

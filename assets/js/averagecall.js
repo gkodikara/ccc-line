@@ -51,7 +51,7 @@ $(document).ready(function() {
         var n = month[Xmas95.getMonth()];
 
 
-
+       
         if (diffMonths == 0)
         {
             var arr = [[]];
@@ -107,13 +107,17 @@ $(document).ready(function() {
 
             arr[0][0] = 'Date';
             arr[0][1] = 'Number of Call';
-
+            
+            if(div_name == 'pane1')
+                {
             for (var k = 0; k <= diffMonths; k++)
             {
                 temp = [month[start], 0];
                 arr.push(temp);
                 start++;
             }
+            
+            
             for (i = 1; i <= data1.length; i++)
             {
 
@@ -124,6 +128,8 @@ $(document).ready(function() {
 
                 total_call += parseInt(data1[j]['Number_of_call']);
 //                var temp = [,parseInt(data1[j]['Number_of_call'])];
+
+            
                 for (var l = 0; l <= diffMonths + 1; l++)
                 {
                     if (arr[l][0] == month[TEMP_month])
@@ -132,7 +138,21 @@ $(document).ready(function() {
 
                     }
                 }
+            }}
+            else
+            {
+                    for (i = 1; i <= data1.length; i++)
+            {
+
+                var j = i - 1;
+                total_call += parseInt(data1[j]['Number_of_call']);
+                var temp = [data1[j]['Date1'], parseInt(data1[j]['Number_of_call'])];
+
+                arr.push(temp);
             }
+            }
+            
+            
             var data = google.visualization.arrayToDataTable(arr);
 
             var options = {
@@ -338,7 +358,7 @@ $(document).ready(function() {
                             $("select").chosen();
                             $('#age').change(function()
                             {
-                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
+                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "")
                                 {
                                          div_name = 'pane3';
                                         all_fun('pane3');
@@ -347,7 +367,7 @@ $(document).ready(function() {
                             });
                             $('#pane3_start_date').change(function() {
 
-                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
+                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "")
                                 {
                                      div_name = 'pane3';
                                         all_fun('pane3');
@@ -357,7 +377,7 @@ $(document).ready(function() {
                             $("#pane3_start_date").change();
                             $('#pane3_end_date').change(function() {
 
-                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
+                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" )
                                 {
                                         div_name = 'pane3';
                                         all_fun('pane3');
@@ -462,8 +482,7 @@ function all_fun(div_name)
                  var data_val = {
                    start_date : $('#'+div_name+'_start_date').val(),
                    end_date : $('#'+div_name+'_end_date').val() ,
-                   age : $('#age').val()
-               };
+            };
                
                link = 'averagecall/num_caller_age';
             }break;
