@@ -15,7 +15,7 @@ class Averagecall extends CI_Controller {
      $session_data = $this->session->userdata('logged_in');
      $data['username'] = $session_data['username'];
      $this->load->view('header');
-     $data['right'] = '<div style="width:50%;float:left">'. $this->date_ranger('pane1') .'<div id="pane1_avg_call" style="5%"></div><div id="table_tab" style="margin-top:20px"></div></div>' ;
+     $data['right'] = $this->date().'<div style="width:50%;float:left">'. $this->date_ranger('pane1') .'<div id="pane1_avg_call" style="5%"></div><div id="table_tab" style="margin-top:20px"></div></div>' ;
 //     $data['date_ranger'] = $this->date_ranger();
      $this->load->view('averagecall', $data);
      $this->load->view('footer');
@@ -71,6 +71,8 @@ class Averagecall extends CI_Controller {
      
      $table = array();
      
+     if(is_array($data['table_data'] ))
+     {
      foreach ($data['table_data'] as $index => $val)
                 {
                     
@@ -85,7 +87,13 @@ class Averagecall extends CI_Controller {
      $data['chart'] =  $table['table_data'];
      
      $return_data = json_encode($data);
-     
+     }
+     else
+     {
+         $data['table_html'] = "";
+         $data['chart'] = "";
+         $return_data = json_encode($data);
+     }
      echo $return_data;
      
      die;
@@ -101,7 +109,14 @@ class Averagecall extends CI_Controller {
      $end = $this->input->post('end_date');
      $cat = $this->input->post('categories');
  
-        $data['table_data'] = $aveg_call->categories_call_range($start,$end,$cat);
+     if($cat!="")
+     {
+     $data['table_data'] = $aveg_call->categories_call_range($start,$end,$cat);
+     }
+ else {
+        $data['table_data'] = $aveg_call->average_call_range($start,$end);
+     }
+     
      
      $this->table->set_heading(array('Date','Number of Call'));
      
@@ -143,7 +158,13 @@ class Averagecall extends CI_Controller {
      $end = $this->input->post('end_date');
      $cat = $this->input->post('district');
  
+     if($cat != "")
+     {
      $data['table_data'] = $aveg_call->num_province_Categories($start,$end,$cat);
+     }
+     else {
+        $data['table_data'] = $aveg_call->average_call_range($start,$end);
+     }
      
      $this->table->set_heading(array('Date','Number of Call'));
      
@@ -279,8 +300,7 @@ function num_caller_age()
      {
      foreach ($data['table_data'] as $index => $val)
                 {
-                    
-                     $table['table_data'][$index] = $val;
+                    $table['table_data'][$index] = $val;
                 }
      $table_html = $this->table->generate($table['table_data']);
      
@@ -309,4 +329,22 @@ function logout()
    redirect('home', 'refresh');
  }
 
+ 
+ function date()
+ {
+     $this->load->model('averagecall_model');
+      $this->load->helper('form');
+      
+     $aveg_call =  new Averagecall_model();
+     
+     $data['date'] = $aveg_call->date_range();
+     
+     
+     
+     $return_val = form_input(array('name' => 'default_start_date', 'type'=>'hidden', 'id' =>'default_start_date'),$data['date'][0]['min']);
+ $return_val .= form_input(array('name' => 'default_end_date', 'type'=>'hidden', 'id' =>'default_end_date'),$data['date'][0]['max']);
+    
+ return $return_val;    
+ }
+ 
 }

@@ -4,9 +4,7 @@ $(document).ready(function(){
 	});
 //	$('.question-container table').wrap('<div class="table-wrapper" />');
 
-$('a').click(function (){
-        alert('abc');
-});
+
 
 });
 

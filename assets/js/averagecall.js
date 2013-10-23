@@ -1,18 +1,38 @@
-
 $(document).ready(function() {
+
+
     var div_name = "pane1";
- 
+
+
+    $("#" + div_name + "_start_date").datepicker({dateFormat: "yy-mm-dd"});
+    $("#" + div_name + "_end_date").datepicker({dateFormat: "yy-mm-dd"});
+    $('.time-field').timeEntry();
+    $("select").chosen();
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yy = today.getFullYear();
+
+
+//    alert(dd+'-'+mm+'-'+yy);
+    
+    $("#" + div_name + "_start_date").val(yy + '-' + mm + '-' + dd);
+    $("#" + div_name + "_end_date").val(yy + '-' + mm + '-' + dd);
+
+
+
     google.load("visualization", "1", {packages: ["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart(data1) {
-        
+
         var i = 1;
         var total_call = 0;
-        var a = moment($('#'+div_name+'_start_date').val(), 'YYYY-M-D');
-        var b = moment($('#'+div_name+'_end_date').val(), 'YYYY-M-D');
+        var a = moment($('#' + div_name + '_start_date').val(), 'YYYY-M-D');
+        var b = moment($('#' + div_name + '_end_date').val(), 'YYYY-M-D');
         var diffMonths = b.diff(a, 'months');
 
-        var Xmas95 = new Date($('#'+div_name+'_start_date').val());
+        var Xmas95 = new Date($('#' + div_name + '_start_date').val());
         var month = Xmas95.getMonth();
         var d = new Date();
         var month = new Array();
@@ -58,7 +78,7 @@ $(document).ready(function() {
 
             var avg = total_call / data1.length;
 //        alert(avg);
-            
+
             var data = google.visualization.arrayToDataTable(arr);
             var options = {
                 title: 'Call Rate',
@@ -66,13 +86,13 @@ $(document).ready(function() {
                 hAxis: {title: 'Number of Calls', titleTextStyle: {color: 'red'}}
             };
 
-            var chart = new google.visualization.BarChart(document.getElementById(div_name+'_chart_div'));
-            
-            if(!isNaN(avg))
+            var chart = new google.visualization.BarChart(document.getElementById(div_name + '_chart_div'));
+
+            if (!isNaN(avg))
             {
                 var abc = 'Average Call per day :' + avg;
 
-                 $('#'+div_name+'_avg_call').html(abc);
+                $('#' + div_name + '_avg_call').html(abc);
 
                 chart.draw(data, options);
             }
@@ -121,16 +141,16 @@ $(document).ready(function() {
                 hAxis: {title: 'Number of Calls', titleTextStyle: {color: 'red'}}
             };
 
-            var chart = new google.visualization.BarChart(document.getElementById(div_name+'_chart_div'));
+            var chart = new google.visualization.BarChart(document.getElementById(div_name + '_chart_div'));
 
             var avg = total_call / (diffMonths + 1);
 //        alert(avg);
-        
-            if(!isNaN(avg))
+
+            if (!isNaN(avg))
             {
                 var abc = 'Average Call per Month :' + avg;
 
-                $('#'+div_name+'_avg_call').html(abc);
+                $('#' + div_name + '_avg_call').html(abc);
 
                 chart.draw(data, options);
             }
@@ -140,44 +160,53 @@ $(document).ready(function() {
     oDataTable = $("table").dataTable({
         "sPaginationType": "full_numbers",
     });
-    
-   function fnToggleLoading() {
-    //    alert('abc');
-        $(".add-service-toggle").toggle();
-    }
-  
-    $('#'+div_name+'_start_date').change(function() {
-        if ($('#'+div_name+'_start_date').val() != "" && $('#'+div_name+'_end_date').val() != "")
+
+
+
+    $('#' + div_name + '_start_date').change(function() {
+        if ($('#' + div_name + '_start_date').val() != "" && $('#' + div_name + '_end_date').val() != "")
         {
+            fnToggleLoading();
             var d = new Date()
 
             $.ajax({
                 type: "POST",
                 url: "averagecall/num_call",
-                data: {"start_date": $('#'+div_name+'_start_date').val(), 'end_date': $('#'+div_name+'_end_date').val()},
+                data: {"start_date": $('#' + div_name + '_start_date').val(), 'end_date': $('#' + div_name + '_end_date').val()},
                 success: function(response) {
 //                    alert(response['table_html']);
 
                     var data = jQuery.parseJSON(response);
-                    $('#table_tab').css('margin-top', '10%');
+                    $('#table_tab').css('margin-top', '20%');
                     $('#table_tab').html(data['table_html']);
                     var abc = "[['Date','Number of Call'] ," + data['chart'] + "]";
 
-                    drawChart(data['chart']);
+                    if (data['chart'] != "")
+                    {
+                        drawChart(data['chart']);
+                    }
+                    else
+                    {
+                        $('#pane1_chart_div').html("");
+                    }
+                    fnToggleLoading();
+                },
+                error: function() {
+                    fnToggleLoading();
                 }
             });
         }
     });
 
-    $('#'+div_name+'_end_date').change(function() {
+    $('#' + div_name + '_end_date').change(function() {
 
-        if ($('#'+div_name+'_start_date').val() != "" && $('#'+div_name+'_end_date').val() != "")
+        if ($('#' + div_name + '_start_date').val() != "" && $('#' + div_name + '_end_date').val() != "")
         {
-
+            fnToggleLoading();
             $.ajax({
                 type: "POST",
                 url: "averagecall/num_call",
-                data: {"start_date": $('#'+div_name+'_start_date').val(), 'end_date': $('#'+div_name+'_end_date').val()},
+                data: {"start_date": $('#' + div_name + '_start_date').val(), 'end_date': $('#' + div_name + '_end_date').val()},
                 success: function(response) {
 //                    alert(response['table_html']);
 
@@ -185,12 +214,25 @@ $(document).ready(function() {
                     $('#table_tab').css('margin-top', '20%');
                     $('#table_tab').html(data['table_html']);
 
-//                     alert(abc);
-                    drawChart(data['chart']);
+                    if (data['chart'] != "")
+                    {
+                        drawChart(data['chart']);
+                    }
+                    else
+                    {
+                        $('#pane1_chart_div').html("");
+                    }
+                    fnToggleLoading()
+                },
+                error: function()
+                {
+                    fnToggleLoading();
                 }
             });
         }
     });
+
+    $("#" + div_name + "_start_date").change();
 
     $('a').click(function() {
 
@@ -201,284 +243,273 @@ $(document).ready(function() {
         {
             case 'Average Call Rate':
                 {
-                  
+
                     div_name = 'pane1';
                 }
                 break;
 
             case 'Caller Categories':
                 {
-                     div_name = 'pane2';
+                    div_name = 'pane2';
+                    if( !$('#pane2_table_tab').html() && $('#pane2_table_tab').html()!="")
+                       { 
                     $.ajax({
-                                type: "POST",
-                                url: "averagecall/Caller_Categories",
-                                
-                                success: function(response) {
-                                    var data = jQuery.parseJSON(response);
-                                    $('#pane2').html(data['right']);
-                                    $("#"+div_name+"_start_date").datepicker({dateFormat: "yy-mm-dd"});
-                                    $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
-                                    $('.time-field').timeEntry();
-                                    $("select").chosen();
-                                     $('#categories').change(function ()
-                                        {
-                                              if ($('#pane2_start_date').val() != "" && $('#pane2_end_date').val() != "" && $('#categories').val())
-                                                {
+                        type: "POST",
+                        url: "averagecall/Caller_Categories",
+                        success: function(response) {
+                            var data = jQuery.parseJSON(response);
+                            $('#pane2').html(data['right']);
+                            $("#" + div_name + "_start_date").datepicker({dateFormat: "yy-mm-dd"});
+                            $("#" + div_name + "_end_date").datepicker({dateFormat: "yy-mm-dd"});
+                            $('.time-field').timeEntry();
+                            $("select").chosen();
 
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "averagecall/num_caller_categories",
-                                                        data: {"start_date": $('#pane2_start_date').val(), 'end_date': $('#pane2_end_date').val(),'categories':$('#categories').val()},
-                                                        success: function(response) {
+                            var today = new Date();
+                            var dd = today.getDate();
+                            var mm = today.getMonth() + 1;
+                            var yy = today.getFullYear();
 
-                                                            var data = jQuery.parseJSON(response);
-                                                            $('#pane2_table_tab').css('margin-top', '20%');
-                                                            $('#pane2_table_tab').html(data['table_html']);
 
-                                                            drawChart(data['chart']);
-                                                        }
-                                                    });
-                                                }
-                                        });
-                                      $('#pane2_start_date').change(function() {
-                                                      
-                                                  if ($('#pane2_start_date').val() != "" && $('#pane2_end_date').val() != "" && $('#categories').val())
-                                                  {
-                                                     
-                                                      var d = new Date()
+                            //    alert(dd+'-'+mm+'-'+yy);
 
-                                                      $.ajax({
-                                                          type: "POST",
-                                                          url: "averagecall/num_caller_categories",
-                                                          data: {"start_date": $('#pane2_start_date').val(), 'end_date': $('#pane2_end_date').val(),'categories':$('#categories').val()},
-                                                          success: function(response) {
-                                          //                    alert(response['table_html']);
+                            $("#" + div_name + "_start_date").val(yy + '-' + mm + '-' + dd);
+                            $("#" + div_name + "_end_date").val(yy + '-' + mm + '-' + dd);
 
-                                                              var data = jQuery.parseJSON(response);
-                                                              $('#pane2_table_tab').css('margin-top', '20%');
-                                                              $('#pane2_table_tab').html(data['table_html']);
-                                                              
-                                                              drawChart(data['chart']);
-                                                          }
-                                                      });
-                                                  }
-                                              });
-                                           
-                                    $('#pane2_end_date').change(function() {
-                                      
-                                        if ($('#pane2_start_date').val() != "" && $('#pane2_end_date').val() != "" && $('#categories').val())
-                                        {
-
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "averagecall/num_caller_categories",
-                                                data: {"start_date": $('#pane2_start_date').val(), 'end_date': $('#pane2_end_date').val(),'categories':$('#categories').val()},
-                                                success: function(response) {
-                                                    
-                                                    var data = jQuery.parseJSON(response);
-                                                    $('#pane2_table_tab').css('margin-top', '20%');
-                                                    $('#pane2_table_tab').html(data['table_html']);
-
-                                                    drawChart(data['chart']);
-                                                }
-                                            });
-                                        }
-                                    }); 
-                                              
+                            $('#categories').change(function()
+                            {
+                                if ($('#pane2_start_date').val() != "" && $('#pane2_end_date').val() != "")
+                                {
+                                    
+                                     div_name = 'pane2';
+                                        all_fun('pane2');
                                 }
                             });
-                            
+                            $('#pane2_start_date').change(function() {
+
+                                if ($('#pane2_start_date').val() != "" && $('#pane2_end_date').val() != "")
+                                {
+                                        div_name = 'pane2';
+                                        all_fun('pane2');
+                                }
+                            });
+
+                            $('#pane2_end_date').change(function() {
+
+                                if ($('#pane2_start_date').val() != "" && $('#pane2_end_date').val() != "")
+                                {
+                                        div_name = 'pane2';
+                                        all_fun('pane2');
+                                    
+                                }
+                            });
+                            $("#pane2_start_date").change();
+                        }
+                    });
+                }
+
                 }
                 break;
             case  'Caller Age Group':
                 {
                     div_name = 'pane3';
-                    
+                     if( !$('#pane3_table_tab').html() && $('#pane3_table_tab').html()!="")
+                       { 
                     $.ajax({
-                                type: "POST",
-                                url: "averagecall/caller_age_categories",
-                                
-                                success: function(response) {
-                                    var data = jQuery.parseJSON(response);
-                                    $('#pane3').html(data['right']);
-                                    $("#"+div_name+"_start_date").datepicker({dateFormat: "yy-mm-dd"});
-                                    $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
-                                    $('.time-field').timeEntry();
-                                    $("select").chosen();
-                                     $('#age').change(function ()
-                                        {
-                                              if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
-                                                {
+                        type: "POST",
+                        url: "averagecall/caller_age_categories",
+                        success: function(response) {
+                            var data = jQuery.parseJSON(response);
+                            $('#pane3').html(data['right']);
+                            $("#" + div_name + "_start_date").datepicker({dateFormat: "yy-mm-dd"});
+                            $("#" + div_name + "_end_date").datepicker({dateFormat: "yy-mm-dd"});
 
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "averagecall/num_caller_age",
-                                                        data: {"start_date": $('#pane3_start_date').val(), 'end_date': $('#pane3_end_date').val(),'age':$('#age').val()},
-                                                        success: function(response) {
+                            var today = new Date();
+                            var dd = today.getDate();
+                            var mm = today.getMonth() + 1;
+                            var yy = today.getFullYear();
 
-                                                            var data = jQuery.parseJSON(response);
-                                                            $('#pane3_table_tab').css('margin-top', '20%');
-                                                            $('#pane3_table_tab').html(data['table_html']);
 
-                                                            drawChart(data['chart']);
-                                                        }
-                                                    });
-                                                }
-                                        });
-                                      $('#pane3_start_date').change(function() {
-                                                   
-                                                  if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
-                                                  {
-                                                     
-                                                      var d = new Date()
+                            //    alert(dd+'-'+mm+'-'+yy);
 
-                                                      $.ajax({
-                                                          type: "POST",
-                                                          url: "averagecall/num_caller_age",
-                                                          data: {"start_date": $('#pane3_start_date').val(), 'end_date': $('#pane3_end_date').val(),'age':$('#age').val()},
-                                                          success: function(response) {
-                                          //                    alert(response['table_html']);
+                            $("#" + div_name + "_start_date").val(yy + '-' + mm + '-' + dd);
+                            $("#" + div_name + "_end_date").val(yy + '-' + mm + '-' + dd);
 
-                                                              var data = jQuery.parseJSON(response);
-                                                              $('#pane3_table_tab').css('margin-top', '20%');
-                                                              $('#pane3_table_tab').html(data['table_html']);
-                                                              if(data['chart'])
-                                                                  {
-                                                              drawChart(data['chart']);
-                                                                  }
-                                                              else
-                                                                {
-                                                                    $('#pane3_chart_div').html("");
-                                                                }
-                                                          }
-                                                      });
-                                                  }
-                                              });
-                                           
-                                    $('#pane3_end_date').change(function() {
-                                      
-                                        if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
-                                        {
-                                          
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "averagecall/num_caller_age",
-                                                data: {"start_date": $('#pane3_start_date').val(), 'end_date': $('#pane3_end_date').val(),'age':$('#age').val()},
-                                                success: function(response) {
-                                                    
-                                                    var data = jQuery.parseJSON(response);
-                                                    $('#pane3_table_tab').css('margin-top', '20%');
-                                                    $('#pane3_table_tab').html(data['table_html']);
-
-                                                    drawChart(data['chart']);
-                                                }
-                                            });
-                                        }
-                                    }); 
-                                              
+                            $('.time-field').timeEntry();
+                            $("select").chosen();
+                            $('#age').change(function()
+                            {
+                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
+                                {
+                                         div_name = 'pane3';
+                                        all_fun('pane3');
+                                    
                                 }
                             });
-                    
+                            $('#pane3_start_date').change(function() {
+
+                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
+                                {
+                                     div_name = 'pane3';
+                                        all_fun('pane3');
+                                }
+                            });
+
+                            $("#pane3_start_date").change();
+                            $('#pane3_end_date').change(function() {
+
+                                if ($('#pane3_start_date').val() != "" && $('#pane3_end_date').val() != "" && $('#age').val())
+                                {
+                                        div_name = 'pane3';
+                                        all_fun('pane3');
+                                }
+                            });
+
+                        }
+                    });
+                    }
                 }
                 break;
             case 'Caller provinces':
                 {
                     div_name = 'pane4';
+                     if( !$('#pane4_table_tab').html() && $('#pane4_table_tab').html()!="")
+                       { 
                     $.ajax({
-                                type: "POST",
-                                url: "averagecall/province_Categories",
-                                
-                                success: function(response) {
-                                    var data = jQuery.parseJSON(response);
-                                    $('#pane4').html(data['right']);
-                                    $("#"+div_name+"_start_date").datepicker({dateFormat: "yy-mm-dd"});
-                                    $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
-                                    $('.time-field').timeEntry();
-                                    $("select").chosen();
-                                     $('#district').change(function ()
-                                        {
-                                              if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "" && $('#district').val())
-                                                {
+                        type: "POST",
+                        url: "averagecall/province_Categories",
+                        success: function(response) {
+                            var data = jQuery.parseJSON(response);
+                            $('#pane4').html(data['right']);
+                            $("#" + div_name + "_start_date").datepicker({dateFormat: "yy-mm-dd"});
+                            $("#" + div_name + "_end_date").datepicker({dateFormat: "yy-mm-dd"});
+                            $('.time-field').timeEntry();
+                            $("select").chosen();
 
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "averagecall/num_province_Categories",
-                                                        data: {"start_date": $('#pane4_start_date').val(), 'end_date': $('#pane4_end_date').val(),'district':$('#district').val()},
-                                                        success: function(response) {
+                            var today = new Date();
+                            var dd = today.getDate();
+                            var mm = today.getMonth() + 1;
+                            var yy = today.getFullYear();
 
-                                                            var data = jQuery.parseJSON(response);
-                                                            $('#pane4_table_tab').css('margin-top', '20%');
-                                                            $('#pane4_table_tab').html(data['table_html']);
 
-                                                            drawChart(data['chart']);
-                                                        }
-                                                    });
-                                                }
-                                        });
-                                      $('#pane4_start_date').change(function() {
-                                                   
-                                                  if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "" && $('#district').val())
-                                                  {
-                                                     
-                                                      var d = new Date()
+                            //    alert(dd+'-'+mm+'-'+yy);
 
-                                                      $.ajax({
-                                                          type: "POST",
-                                                          url: "averagecall/num_province_Categories",
-                                                          data: {"start_date": $('#pane4_start_date').val(), 'end_date': $('#pane4_end_date').val(),'district':$('#district').val()},
-                                                          success: function(response) {
-                                          //                    alert(response['table_html']);
+                            $("#" + div_name + "_start_date").val(yy + '-' + mm + '-' + dd);
+                            $("#" + div_name + "_end_date").val(yy + '-' + mm + '-' + dd);
 
-                                                              var data = jQuery.parseJSON(response);
-                                                              $('#pane4_table_tab').css('margin-top', '20%');
-                                                              $('#pane4_table_tab').html(data['table_html']);
-                                                              if(data['chart'])
-                                                                  {
-                                                              drawChart(data['chart']);
-                                                                  }
-                                                              else
-                                                                {
-                                                                    $('#pane4_chart_div').html("");
-                                                                }
-                                                          }
-                                                      });
-                                                  }
-                                              });
-                                           
-                                    $('#pane4_end_date').change(function() {
-                                      
-                                        if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "" && $('#district').val())
-                                        {
-                                          
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "averagecall/num_province_Categories",
-                                                data: {"start_date": $('#pane4_start_date').val(), 'end_date': $('#pane4_end_date').val(),'district':$('#district').val()},
-                                                success: function(response) {
-                                                    
-                                                    var data = jQuery.parseJSON(response);
-                                                    $('#pane4_table_tab').css('margin-top', '20%');
-                                                    $('#pane4_table_tab').html(data['table_html']);
-
-                                                    drawChart(data['chart']);
-                                                }
-                                            });
-                                        }
-                                    }); 
-                                              
+                            $('#district').change(function()
+                            {
+                                if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "")
+                                {
+                                     div_name = 'pane4';
+                                        all_fun('pane4');
                                 }
                             });
-                   
+                            $('#pane4_start_date').change(function() {
+
+                                if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "")
+                                {
+                                         div_name = 'pane4';
+                                        all_fun('pane4');
+                                }
+                            });
+
+                            $('#pane4_end_date').change(function() {
+
+                                if ($('#pane4_start_date').val() != "" && $('#pane4_end_date').val() != "")
+                                {
+                                         div_name = 'pane4';
+                                        all_fun('pane4');
+                                }
+                            });
+                            $('#pane4_start_date').change();
+                        }
+                    });
+                       }
                 }
                 break;
         }
-//        $(div_name).html();
-
     });
 
-//	$('.question-container table').wrap('<div class="table-wrapper" />');
-    $("#"+div_name+"_start_date").datepicker({dateFormat: "yy-mm-dd"});
-    $("#"+div_name+"_end_date").datepicker({dateFormat: "yy-mm-dd"});
-    $('.time-field').timeEntry();
-    $("select").chosen();
+
+function all_fun(div_name)
+{
+    var link = "";
+    fnToggleLoading();
+    switch (div_name)
+    {
+        case 'pane1' :
+            {
+               
+               var data_val = {
+                   start_date : $('#'+div_name+'_start_date').val(),
+                   end_date : $('#'+div_name+'_end_date').val()       
+               };
+               
+               link = 'averagecall/num_call';
+            }break;
+        case 'pane2':
+        {
+            var data_val = {
+                   start_date : $('#'+div_name+'_start_date').val(),
+                   end_date : $('#'+div_name+'_end_date').val() ,
+                   categories : $('#categories').val()
+               };
+               
+               link = 'averagecall/num_caller_categories';
+        }break;
+        case 'pane3':
+            {
+                 var data_val = {
+                   start_date : $('#'+div_name+'_start_date').val(),
+                   end_date : $('#'+div_name+'_end_date').val() ,
+                   age : $('#age').val()
+               };
+               
+               link = 'averagecall/num_caller_age';
+            }break;
+         case 'pane4':
+         {
+              var data_val = {
+                   start_date : $('#'+div_name+'_start_date').val(),
+                   end_date : $('#'+div_name+'_end_date').val() ,
+                   district: $('#district').val()
+               };
+               
+               link = 'averagecall/num_province_Categories';
+         }break;
+    }
+    
+     $.ajax({
+                type: "POST",
+                url: link,
+                data: data_val,
+                success: function(response) {
+//                    alert(response['table_html']);
+
+                    var data = jQuery.parseJSON(response);
+                    $('#'+div_name+'_table_tab').css('margin-top', '20%');
+                    $('#'+div_name+'_table_tab').html(data['table_html']);
+                    var abc = "[['Date','Number of Call'] ," + data['chart'] + "]";
+
+                    if (data['chart'] != "")
+                    {
+                        drawChart(data['chart']);
+                    }
+                    else
+                    {
+                        $('#'+div_name+'_chart_div').html("");
+                    }
+                    fnToggleLoading();
+                },
+                error: function() {
+                    fnToggleLoading();
+                }
+            });
+}
+
 });
+
+function fnToggleLoading() {
+    $(".add-service-toggle").toggle();
+}
+
