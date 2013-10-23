@@ -5,6 +5,22 @@ Class Averagecall_model extends CI_Model {
     }
     
     
+    function date_range()
+    {
+        $sql = "SELECT max(`date_of_call`) as max,min(`date_of_call`) as min from callers";
+        
+        $res = $this->db->query($sql);
+        if($res->num_rows())
+        {
+        return $res->result_array();
+        }
+        ELSE
+        {
+            return "";
+        }
+        
+    }
+            
     function average_call_range($start_date,$end_date)
     {
         $sql = "SELECT `date_of_call` as Date1,count(`id`) as Number_of_call  FROM callers WHERE `date_of_call` between '".$start_date . "' and '" .$end_date ."' group by `date_of_call`";
@@ -80,14 +96,13 @@ Class Averagecall_model extends CI_Model {
         $sql = "SELECT `date_of_call` AS Date1, count( `id` ) AS Number_of_call
         FROM callers
         WHERE `date_of_call`
-        BETWEEN '2013-07-01'
-        AND '2013-10-31'
+        BETWEEN '".$start_date . "' and '" .$end_date ."'
         AND caller_district
         IN ($str)
         GROUP BY `date_of_call`
         ";
         
-//     echo $sql;
+
                 $res = $this->db->query($sql);
                 if($res->num_rows()>0)
                 {
