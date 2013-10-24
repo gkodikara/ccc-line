@@ -111,7 +111,7 @@ class Averagecall extends CI_Controller {
      $data['table_data'] = $aveg_call->categories_call_range($start,$end);
      
      
-     $this->table->set_heading(array('Categories','Number of Call'));
+     $this->table->set_heading(array('Issues','Number of Call'));
      
      $data_row = "";
       $table = array();
