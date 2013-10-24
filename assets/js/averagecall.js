@@ -268,7 +268,7 @@ $(document).ready(function() {
                 }
                 break;
 
-            case 'Caller Issues':
+            case 'Issue stats':
                 {
                     div_name = 'pane2';
                     if( !$('#pane2_table_tab').html() && $('#pane2_table_tab').html()!="")
