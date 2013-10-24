@@ -36,7 +36,7 @@
 <div class="tabbable container">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#pane1" data-toggle="tab">Average Call Rate</a></li>
-        <li><a href="#pane2" data-toggle="tab">Caller Categories</a></li>
+        <li><a href="#pane2" data-toggle="tab">Caller Issues</a></li>
         <li><a href="#pane3" data-toggle="tab">Caller Age Group</a></li>
         <li><a href="#pane4" data-toggle="tab">Caller provinces</a></li>
     </ul>
