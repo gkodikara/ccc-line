@@ -52,13 +52,14 @@ Class Averagecall_model extends CI_Model {
     
     function categories_call_range($start_date,$end_date)
     {
+//        
+//                $sql = "SELECT rc.category_name as Date1,count(callers.id) as Number_of_call FROM callers \n"
+//                    . "INNER JOIN caller_service_link as csl on csl.caller_id = callers .id\n"
+//                    . "INNER JOIN referreral_categories as rc on rc.id = csl.service_id\n"
+//                    . "WHERE callers.date_of_call between '".$start_date."' and '".$end_date."' group by csl.service_id";
+//                
         
-                $sql = "SELECT rc.category_name as Date1,count(callers.id) as Number_of_call FROM callers \n"
-                    . "INNER JOIN caller_service_link as csl on csl.caller_id = callers .id\n"
-                    . "INNER JOIN referreral_categories as rc on rc.id = csl.service_id\n"
-                    . "WHERE callers.date_of_call between '".$start_date."' and '".$end_date."' group by csl.service_id";
-                
-               
+       $sql = "SELECT ic.issue_name as Date1,count(cs.id) as Number_of_call FROM callers as cs join issue_codes as ic on ic.id in (select major_issues from callers WHERE `id` = cs.id)WHERE cs.date_of_call between '".$start_date."' and '".$end_date."' group by ic.id";
                 $res = $this->db->query($sql);
                 if($res->num_rows())
                 {
