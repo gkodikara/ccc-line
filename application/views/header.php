@@ -14,13 +14,11 @@
 	<script type="text/javascript" src="<?= base_url(); ?>assets/js/jquery-ui-1.10.1.custom.min.js"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/js/bootstrap.min.js"></script>
-  <!--  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript" src="<?= base_url(); ?>assets/js/google_charts.js"></script>-->
 	<script type="text/javascript" src="<?= base_url(); ?>assets/js/jquery.timeentry.js"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/js/chosen.jquery.min.js"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/js/jquery.validate.js"></script>
 
-
+        <script type="text/javascript" src="<?= base_url(); ?>assets/js/moment.min.js"></script>
 
 
   </head>

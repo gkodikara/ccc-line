@@ -138,3 +138,44 @@ header {
 .nav>li>a:hover, .nav>li>a:focus {
 	background-color: #333 !important;
 }
+
+.table-tab {
+	margin-top: 20px;
+}
+
+.table-tab table {
+	width: 70%;
+}
+
+legend {
+	border-bottom: 5px solid #4F9DEF !important;
+}
+
+.control-label {
+	margin: 5px 5px 5px 0px;
+}
+
+.tabbable {
+	width: 80% !important;
+}
+
+.tabbable .nav-tabs {
+	border-bottom: 5px solid #4F9DEF !important;
+	left: 0px;
+}
+
+.tabbable .nav-tabs li a {
+	color: black;
+	margin-bottom: -9px;
+	border-bottom: 0px;
+	border: 5px solid transparent !important;
+
+}
+
+.tabbable .nav-tabs li a:hover, .tabbable .nav-tabs li.active a {
+	border-color: #4F9DEF !important;
+	background: white !important;
+	border-bottom: 0px !important;
+}
+
+

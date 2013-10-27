@@ -13,6 +13,7 @@
 			<li><a href="<?= base_url(); ?>index.php/questions/show_questions">Show All Entries</a></li>
 		</ul>
 	</li>
+	<li><a href="<?= base_url(); ?>index.php/averagecall">Reports</a></li>
 </ul>
 	<div class="account-box pull-right">
 		<span>Welcome <?php echo $username; ?>!</span>

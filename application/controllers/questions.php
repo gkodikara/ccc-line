@@ -35,15 +35,15 @@ class Questions extends CI_Controller {
                 $table = $this->questions_model->get_service_table();
 		$this->table->set_heading($table['table_headers']);
                 
-                foreach ($table['table_data'] as $index => $val)
-                {
-                     $table['table_data'][$index]['service_type'] = $this->service_type_id($val['id']);
-                     
-                }
-//                var_dump($table);
+        foreach ($table['table_data'] as $index => $val)
+        {
+             $table['table_data'][$index]['service_type'] = $this->service_type_id($val['id']);
+             
+        }
+
 		$table_html = $this->table->generate($table['table_data']);
                 
-                $data['services_table'] = $table_html;
+        $data['services_table'] = $table_html;
                 
 		$this->load->view('header');
 		$this->login->check_login();
