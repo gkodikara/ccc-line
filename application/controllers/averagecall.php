@@ -14,7 +14,7 @@ class Averagecall extends CI_Controller {
  {
     $this->load->view('header');
     $this->login->check_login();
-     $data['right'] = $this->date().'<div style="width:30%;float:left"><h4>Average Call Rate</h4>'. $this->date_ranger('pane1') .'<div id="pane1_avg_call" style="5%"></div><div id="table_tab" class="table-tab"></div></div>' ;
+     $data['right'] = $this->date().'<h4>Average Call Rate</h4><div style="width:30%;float:left">'. $this->date_ranger('pane1') .'<div id="pane1_avg_call" style="5%"></div><div id="table_tab" class="table-tab"></div></div>' ;
 //     $data['date_ranger'] = $this->date_ranger();
      $this->load->view('averagecall', $data);
      $this->load->view('footer');
@@ -178,20 +178,20 @@ class Averagecall extends CI_Controller {
          
  function caller_age_categories()
  {
-     $data['right'] ='<div style="width:30%;float:left"><h4>Caller Age Group</h4>'. $this->date_ranger('pane3') .'<div id="pane3_avg_call" style="5%"></div><div id="pane3_table_tab" class="table-tab"></div></div><div id="pane3_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
+     $data['right'] ='<h4>Caller Age Group</h4><div style="width:30%;float:left">'. $this->date_ranger('pane3') .'<div id="pane3_avg_call" style="5%"></div><div id="pane3_table_tab" class="table-tab"></div></div><div id="pane3_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
      echo json_encode($data);
  }
          
  function Caller_Categories()
 {
-     $data['right'] = '<div style="width:30%;float:left"><h4>Caller Issues/h4>'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" class="table-tab"></div></div><div id="pane2_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
+     $data['right'] = '<h4>Caller Issues/h4><div style="width:30%;float:left">'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" class="table-tab"></div></div><div id="pane2_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
      echo json_encode($data);
 }
 
 
 function province_Categories()
 {
-     $data['right'] = '<div style="width:30%;float:left"><h4>Caller Provinces</h4>'. $this->date_ranger('pane4') .'<div id="pane4_avg_call" style="5%"></div><div id="pane4_table_tab" class="table-tab"></div></div><div id="pane4_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
+     $data['right'] = '<h4>Caller Provinces</h4><div style="width:30%;float:left">'. $this->date_ranger('pane4') .'<div id="pane4_avg_call" style="5%"></div><div id="pane4_table_tab" class="table-tab"></div></div><div id="pane4_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
      echo json_encode($data);
 }
 
