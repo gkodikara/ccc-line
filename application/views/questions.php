@@ -1,3 +1,4 @@
+<h3>Past Calls</h3>
 <div class="question-container">
     <div class="table-wrapper">
 	<?= $table_body; ?>

@@ -56,7 +56,7 @@ $(document).ready(function() {
         {
             var arr = [[]];
             arr[0][0] = 'Date';
-            arr[0][1] = 'Number of Call';
+            arr[0][1] = 'Number of Calls';
 
             for (i = 1; i <= data1.length; i++)
             {
@@ -106,7 +106,7 @@ $(document).ready(function() {
             var data = new google.visualization.DataTable();
 
             arr[0][0] = 'Date';
-            arr[0][1] = 'Number of Call';
+            arr[0][1] = 'Number of Calls';
             
             if(div_name == 'pane1')
                 {
@@ -199,7 +199,7 @@ $(document).ready(function() {
                     var data = jQuery.parseJSON(response);
                     $('#table_tab').css('margin-top', '20%');
                     $('#table_tab').html(data['table_html']);
-                    var abc = "[['Date','Number of Call'] ," + data['chart'] + "]";
+                    var abc = "[['Date','Number of Calls'] ," + data['chart'] + "]";
 
                     if (data['chart'] != "")
                     {
@@ -508,7 +508,7 @@ function all_fun(div_name)
                     var data = jQuery.parseJSON(response);
                     $('#'+div_name+'_table_tab').css('margin-top', '20%');
                     $('#'+div_name+'_table_tab').html(data['table_html']);
-                    var abc = "[['Date','Number of Call'] ," + data['chart'] + "]";
+                    var abc = "[['Date','Number of Calls'] ," + data['chart'] + "]";
 
                     if (data['chart'] != "")
                     {

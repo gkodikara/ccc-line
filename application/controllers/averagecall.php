@@ -5,35 +5,26 @@ class Averagecall extends CI_Controller {
  function __construct()
  {
    parent::__construct();
-   $this->load->library("table");
+    $this->load->library("table");
+    $this->load->model("login");
+
  }
 
  function index()
  {
-   if($this->session->userdata('logged_in'))
-   {
-     $session_data = $this->session->userdata('logged_in');
-     $data['username'] = $session_data['username'];
-     $this->load->view('header');
-     $data['right'] = $this->date().'<div style="width:50%;float:left">'. $this->date_ranger('pane1') .'<div id="pane1_avg_call" style="5%"></div><div id="table_tab" style="margin-top:20px"></div></div>' ;
+    $this->load->view('header');
+    $this->login->check_login();
+     $data['right'] = $this->date().'<div style="width:30%;float:left">'. $this->date_ranger('pane1') .'<div id="pane1_avg_call" style="5%"></div><div id="table_tab" class="table-tab"></div></div>' ;
 //     $data['date_ranger'] = $this->date_ranger();
      $this->load->view('averagecall', $data);
      $this->load->view('footer');
-   }
-   else
-   {
-     //If no session, redirect to login page
-     redirect('login', 'refresh');
-   }
  }
 
  
  function date_ranger($name)
- {
-     
-     	
+ {     	
      $data =  '<fieldset class="field" style="height:150px">
-               <legend class="leg">Select Date Ranger</legend>
+               <legend class="leg">Select Date Range</legend>
                 <div style="width:100%;margin-top:20px">  
                 <span class="control-group" style="float:left;width:50%">
                     <label class="control-label" style="float: left" for="inputEmail">Start Date:</label>
@@ -47,7 +38,7 @@ class Averagecall extends CI_Controller {
                    <input class="span2" type="text" id="'.$name.'_end_date" required/>
                    </span></div>
                    <div>
-</fieldset>';
+                </fieldset>';
      return $data;
              
  }
@@ -65,7 +56,7 @@ class Averagecall extends CI_Controller {
         $data['table_data'] = $aveg_call->average_call_range($start,$end);
     
      
-     $this->table->set_heading(array('Date','Number of Call'));
+     $this->table->set_heading(array('Date','Number of Calls'));
      
      $data_row = "";
      
@@ -111,7 +102,7 @@ class Averagecall extends CI_Controller {
      $data['table_data'] = $aveg_call->categories_call_range($start,$end);
      
      
-     $this->table->set_heading(array('Issues','Number of Call'));
+     $this->table->set_heading(array('Issues','Number of Calls'));
      
      $data_row = "";
       $table = array();
@@ -154,7 +145,7 @@ class Averagecall extends CI_Controller {
      $data['table_data'] = $aveg_call->num_province_Categories($start,$end);
     
      
-     $this->table->set_heading(array('Province','Number of Call'));
+     $this->table->set_heading(array('Province','Number of Calls'));
      
      $data_row = "";
      if(is_array($data['table_data'] ))
@@ -187,20 +178,20 @@ class Averagecall extends CI_Controller {
          
  function caller_age_categories()
  {
-     $data['right'] ='<div style="width:50%;float:left">'. $this->date_ranger('pane3') .'<div id="pane3_avg_call" style="5%"></div><div id="pane3_table_tab" style="margin-top:20px"></div></div><div id="pane3_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     $data['right'] ='<div style="width:30%;float:left">'. $this->date_ranger('pane3') .'<div id="pane3_avg_call" style="5%"></div><div id="pane3_table_tab" class="table-tab"></div></div><div id="pane3_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
      echo json_encode($data);
  }
          
  function Caller_Categories()
 {
-     $data['right'] = '<div style="width:50%;float:left">'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" style="margin-top:20px"></div></div><div id="pane2_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     $data['right'] = '<div style="width:30%;float:left">'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" class="table-tab"></div></div><div id="pane2_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
      echo json_encode($data);
 }
 
 
 function province_Categories()
 {
-     $data['right'] = '<div style="width:50%;float:left">'. $this->date_ranger('pane4') .'<div id="pane4_avg_call" style="5%"></div><div id="pane4_table_tab" style="margin-top:20px"></div></div><div id="pane4_chart_div" style="float:right;width: 50%; height:700px"></div>' ;
+     $data['right'] = '<div style="width:30%;float:left">'. $this->date_ranger('pane4') .'<div id="pane4_avg_call" style="5%"></div><div id="pane4_table_tab" class="table-tab"></div></div><div id="pane4_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
      echo json_encode($data);
 }
 
@@ -281,7 +272,7 @@ function num_caller_age()
  
      $data['table_data'] = $aveg_call->age_call_range($start,$end);
      
-     $this->table->set_heading(array('Age Group','Number of Call'));
+     $this->table->set_heading(array('Age Group','Number of Calls'));
      
      $data_row = "";
      if(is_array($data['table_data'] ))
