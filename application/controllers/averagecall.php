@@ -184,7 +184,7 @@ class Averagecall extends CI_Controller {
          
  function Caller_Categories()
 {
-     $data['right'] = '<h4>Caller Issues/h4><div style="width:30%;float:left">'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" class="table-tab"></div></div><div id="pane2_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
+     $data['right'] = '<h4>Caller Issues</h4><div style="width:30%;float:left">'. $this->date_ranger('pane2') .'<div id="pane2_avg_call" style="5%"></div><div id="pane2_table_tab" class="table-tab"></div></div><div id="pane2_chart_div" style="float:right;width: 70%; height:700px"></div>' ;
      echo json_encode($data);
 }
 
