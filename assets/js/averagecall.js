@@ -90,7 +90,7 @@ $(document).ready(function() {
 
             if (!isNaN(avg))
             {
-                var abc = 'Average Call per day :' + avg;
+                var abc = 'Average Call per day: ' + avg;
 
                 $('#' + div_name + '_avg_call').html(abc);
 
