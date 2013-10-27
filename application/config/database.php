@@ -50,13 +50,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-<<<<<<< HEAD
 $db['default']['password'] = 'crimson55';
 $db['default']['database'] = 'CCC';
-=======
-$db['default']['password'] = '';
-$db['default']['database'] = 'ccc';
->>>>>>> 08da87b6067386094b23db548bb8472935692275
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
