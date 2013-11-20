@@ -55,8 +55,13 @@ class Averagecall extends CI_Controller {
     
         $data['table_data'] = $aveg_call->average_call_range($start,$end);
     
+        
+        
+     $this->table->set_heading(array('Date','Number of Call'));
      
-     $this->table->set_heading(array('Date','Number of Calls'));
+     $tmpl = array ( 'table_open'  => '<table id="mtyable">' );
+
+$this->table->set_template($tmpl); 
      
      $data_row = "";
      
@@ -103,7 +108,9 @@ class Averagecall extends CI_Controller {
      
      
      $this->table->set_heading(array('Issues','Number of Calls'));
-     
+     $tmpl = array ( 'table_open'  => '<table id="mtyable">' );
+
+$this->table->set_template($tmpl); 
      $data_row = "";
       $table = array();
      if(is_array($data['table_data']))
@@ -146,7 +153,9 @@ class Averagecall extends CI_Controller {
     
      
      $this->table->set_heading(array('Province','Number of Calls'));
-     
+     $tmpl = array ( 'table_open'  => '<table id="mtyable">' );
+
+$this->table->set_template($tmpl); 
      $data_row = "";
      if(is_array($data['table_data'] ))
      {
@@ -273,7 +282,9 @@ function num_caller_age()
      $data['table_data'] = $aveg_call->age_call_range($start,$end);
      
      $this->table->set_heading(array('Age Group','Number of Calls'));
-     
+     $tmpl = array ( 'table_open'  => '<table id="mtyable">' );
+
+$this->table->set_template($tmpl); 
      $data_row = "";
      if(is_array($data['table_data'] ))
      {
