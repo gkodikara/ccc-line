@@ -197,9 +197,13 @@ $(document).ready(function() {
 //                    alert(response['table_html']);
 
                     var data = jQuery.parseJSON(response);
-                    $('#table_tab').css('margin-top', '20%');
-                    $('#table_tab').html(data['table_html']);
-                    var abc = "[['Date','Number of Calls'] ," + data['chart'] + "]";
+                    $('#table_tab').css('margin-top', '15%');
+                    
+                    
+                    
+                     if(data['table_html'] !="")
+                    $('#table_tab').html('<a class="btn btn-primary" href="javascript:csv_down('+div_name+')">Download CSV</a>'+ data['table_html']);
+                    var abc = "[['Date','Number of Call'] ," + data['chart'] + "]";
 
                     if (data['chart'] != "")
                     {
@@ -231,8 +235,9 @@ $(document).ready(function() {
 //                    alert(response['table_html']);
 
                     var data = jQuery.parseJSON(response);
-                    $('#table_tab').css('margin-top', '20%');
-                    $('#table_tab').html(data['table_html']);
+                    $('#table_tab').css('margin-top', '15%');
+                    if(data['table_html'] !="")
+                    $('#table_tab').html('<a class="btn btn-primary" href="javascript:csv_down('+div_name+')">Download CSV</a>'+ data['table_html']);
 
                     if (data['chart'] != "")
                     {
@@ -506,9 +511,13 @@ function all_fun(div_name)
 //                    alert(response['table_html']);
 
                     var data = jQuery.parseJSON(response);
-                    $('#'+div_name+'_table_tab').css('margin-top', '20%');
-                    $('#'+div_name+'_table_tab').html(data['table_html']);
-                    var abc = "[['Date','Number of Calls'] ," + data['chart'] + "]";
+                    $('#'+div_name+'_table_tab').css('margin-top', '15%');
+                    
+                     if(data['table_html'] !="")
+                    $('#'+div_name+'_table_tab').html('<a class="btn btn-primary" href="javascript:csv_down('+div_name+')">Download CSV</a>'+ data['table_html']);
+                    
+//                    $('#'+div_name+'_table_tab').html(data['table_html']);
+                    var abc = "[['Date','Number of Call'] ," + data['chart'] + "]";
 
                     if (data['chart'] != "")
                     {
@@ -532,3 +541,7 @@ function fnToggleLoading() {
     $(".add-service-toggle").toggle();
 }
 
+function csv_down(div_n)
+{
+ CSV.begin('#'+div_n.id).download('MyData.csv').go();
+}
