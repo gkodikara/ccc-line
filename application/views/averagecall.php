@@ -1,10 +1,35 @@
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">   
-      google.load("visualization", "1", {packages:["corechart"]});
-      // google.setOnLoadCallback(drawChart);  
+<style>
+    .nav li a {
+        color: #333333;
+    }
+
+    .nav > li> a:hover,.nav>li>a:focus
+    {
+        background-color: snow!important;
+    }
+    .field
+    {
+        border: 1px double!important; 
+        margin: 0;
+        padding: 0;
+    }
+    .leg
+    {
+        border-style: none!important;
+        margin-bottom: 0px;
+        width:auto ;
+        margin-left:10px;
+        margin-right: 10px;
+        padding: 5px;
+    }
+</style>
+<script type="text/javascript" src="<?= base_url(); ?>assets/js/jsapi.js"></script>
+<script>
+    google.load("visualization", "1", {packages: ["corechart"]});
+    google.setOnLoadCallback(drawChart);
 </script>
 <script type="text/javascript" src="<?= base_url(); ?>assets/js/averagecall.js"></script>
-
+<script type="text/javascript" src="<?= base_url(); ?>assets/js/html5csv.js"></script>
 
 
 <div class="tabbable container">
