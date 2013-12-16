@@ -52,6 +52,7 @@ class Referrers extends CI_Controller {
                 
                 $service_type =  $this->get_referreral_categories();
                 
+               
 		$data = array(
 			"services_table" => $table_string,//$this->table->generate($service_data["results"]),
 			"field_names_data" => $field_names,
@@ -215,14 +216,14 @@ class Referrers extends CI_Controller {
         function get_referreral_categories()
         {
             $result = "";
-            $result .= '<div id="dropdown_div" style="display: none">';
             $var = $this->services_model->get_referreral_categories();
             foreach ($var as $val) {
-                              $result .=  '<option value='.$val['id'].'>'.$val['category_name'].'</option>';
+                              $result .=  "<option value=$val[id]>$val[category_name]</option>";
                             }
                             
-           $result .= '</div>';                 
-                            return $result;
+            
+       
+           return $result;
         }
         
         function service_type_id($id)
