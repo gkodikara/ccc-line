@@ -2,10 +2,16 @@
     <h3>Referrers</h3>
     <br/> 
     <div class="table-wrapper">
+        <?php
+//         print htmlentities($service_type);
+////         die();
+        ?>
         <?= $services_table; ?>
                         <?php
                         if (isset($service_type)) {
-                            echo $service_type;
+                           echo '<div id="dropdown_div" style="display: none">';
+                            print htmlentities($service_type);
+                          echo '</div>';
                         }
                         ?>
         </div>
