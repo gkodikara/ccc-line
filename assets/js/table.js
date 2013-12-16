@@ -33,6 +33,7 @@ function fnInit() {
         $(".service-modal .modal-body .service-form-container").html(fnGetTableHeads());
 
         fnPopulateModalInput($(this), sSelectedRowId);
+     
         fnAddUpdateservice("update", sSelectedRowId);
     });
 
@@ -182,12 +183,14 @@ function fnAddUpdateservice(sType, sserviceId) {
                 case "update":
                     oData.service_id = sserviceId;
                     oData.ajax = 1;
+                
                     $.ajax({
                         url: "referrers/update_service",
                         data: oData,
                         type: "POST",
                         dataType: "json",
                         success: function(response) {
+                        
                             fnToggleLoading();
                             $(".services-table-container .table-wrapper").html(response.services_table+response.service_type);
                             fnInitDatatable();
@@ -241,6 +244,8 @@ function fnGetTableHeads() {
 
             var temp = $('#dropdown_div').html();
             
+             var temp = $('<div/>').html(temp).text();
+  
              sModalInputLayout += '<div class="control-group">' +
                     '<label class="control-label" ' + sStyle + ' for="' + sHeadId + '">' + sHeadText + ': </label>' +
                     '<div class="controls">' +
@@ -249,6 +254,8 @@ function fnGetTableHeads() {
                         temp + '</select>' +
                     '</div>' +
                     '</div>';
+            
+           
         }
         else
         {
